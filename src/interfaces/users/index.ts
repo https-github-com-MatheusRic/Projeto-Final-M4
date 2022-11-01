@@ -12,3 +12,11 @@ export interface IUserLogin {
     passworld: string
 }
 
+export interface IUserUpdate {
+    email?: string,
+    password?: string,
+    name?: string,
+    username?: string,
+    position?:string,
+    imageUrl?: string
+}

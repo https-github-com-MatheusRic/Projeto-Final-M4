@@ -3,10 +3,11 @@ import { IUserLogin } from "../../interfaces/users"
 import AppError from "../../errors/appError"
 import { compare } from "bcryptjs"
 import jwt from 'jsonwebtoken'
+import { User } from "../../entities/user.entitie"
 
 const createSessionService = async ({email, passworld}: IUserLogin): Promise<string> => {
 
-    const userRepository = AppDataSource.getRepository("<User>")
+    const userRepository = AppDataSource.getRepository(User)
     const user = await userRepository.findOneBy({
         email: email
     })
@@ -23,7 +24,7 @@ const createSessionService = async ({email, passworld}: IUserLogin): Promise<str
     String(process.env.SECRET_KEY),
     {
         expiresIn: '24h',
-        subject: user.id
+        subject: user.uuid
     })
     
     return token
