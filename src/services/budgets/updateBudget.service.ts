@@ -1,7 +1,6 @@
-//importar entity Budget
-
 import AppDataSource from "../../data-source"
 import AppError from "../../errors/appError"
+import { Budget } from "../../entities/budget.entitie"
 import { IBudgetUpdate } from "../../interfaces/budgets"
 
 const updateBudgetService = async ({ ...data }: IBudgetUpdate, budgetId: string, userId: string): Promise<Budget> => {
@@ -9,7 +8,7 @@ const updateBudgetService = async ({ ...data }: IBudgetUpdate, budgetId: string,
 
   const budget = await budgetRepository.findOne({
     where: {
-      id: budgetId,
+      uuid: budgetId,
     },
   })
   
@@ -17,7 +16,7 @@ const updateBudgetService = async ({ ...data }: IBudgetUpdate, budgetId: string,
     throw new AppError("Budget not found", 404)
   } 
   
-  else if (userId !== budget.userId) {
+  else if (userId !== budget.user.uuid) {
     throw new AppError("Unauthorized access", 401)
   } 
   
@@ -38,11 +37,11 @@ const updateBudgetService = async ({ ...data }: IBudgetUpdate, budgetId: string,
 
   const updatedBudget = await budgetRepository.findOne({
     where: {
-      id: budgetId,
+      uuid: budgetId,
     },
   })
 
-  return updatedBudget
+  return updatedBudget!
 }
 
 export default updateBudgetService
