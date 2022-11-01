@@ -8,15 +8,15 @@ import { BudgetStack } from "../../entities/budgetStack.entitie"
 import { Category } from "../../entities/category.entitie"
 
 const createBudgetService = async ({
-  name: projectName,
-  time: projectTime,
+  projectName,
+  projectTime,
   budget,
   fixedCost,
   variableCost,
   userId,
-  customerId,
-  stackId,
   categoryId,
+  customerId,
+  budgetStackId,
 }: IBudgetRequest): Promise<Budget> => { 
 
   const budgetRepository = AppDataSource.getRepository(Budget)
@@ -28,7 +28,7 @@ const createBudgetService = async ({
   const customer = await customerRepository.findOneBy({uuid: customerId})
 
   const stackRepository = AppDataSource.getRepository(BudgetStack)
-  const budgetStack = await stackRepository.findOneBy({uuid: stackId})
+  const budgetStack = await stackRepository.findOneBy({uuid: budgetStackId})
 
   const categoryRepository = AppDataSource.getRepository(Category)
   const category = await categoryRepository.findOneBy({uuid: categoryId})

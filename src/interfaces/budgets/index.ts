@@ -1,14 +1,14 @@
 export interface IBudget {
   uuid: string
-  name: string
-  time: number
+  projectName: string
+  projectTime: number
   budget: number
   fixedCost: number
   variableCost: number
   userId: string
-  customerId: string
-  stackId: string
   categoryId: string
+  customerId: string
+  budgetStackId: string
 }
 
 export interface IBudgetUpdate {
