@@ -9,7 +9,7 @@ const createBudgetService = async ({
   fixedCost,
   variableCost,
   userId,
-  costumerId,
+  customerId,
   stackId,
   categoryId,
 }: IBudgetRequest): Promise<Budget> => { //Importar entity
@@ -22,7 +22,7 @@ const createBudgetService = async ({
     fixedCost,
     variableCost,
     userId,
-    costumerId,
+    customerId,
     stackId,
     categoryId,
   })

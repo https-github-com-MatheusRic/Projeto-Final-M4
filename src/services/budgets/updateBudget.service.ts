@@ -1,42 +1,48 @@
-//import Budget entity
+//importar entity Budget
+
 import AppDataSource from "../../data-source"
 import AppError from "../../errors/appError"
 import { IBudgetUpdate } from "../../interfaces/budgets"
 
-const editBudgetService = async ({ ...data }: IBudgetUpdate, , idBudgetToUpdate: string, idUser: string): Promise<Budget> => {
+const updateBudgetService = async ({ ...data }: IBudgetUpdate, budgetId: string, userId: string): Promise<Budget> => {
   const budgetRepository = AppDataSource.getRepository(Budget)
 
-  const budgetToUpdate = await budgetRepository.findOne({
+  const budget = await budgetRepository.findOne({
     where: {
-      id: idBudgetToUpdate,
+      id: budgetId,
     },
   })
   
-  if (!budgetToUpdate) {
+  if (!budget) {
     throw new AppError("Budget not found", 404)
   } 
   
-  else if (idUser !== budgetToUpdate.userId) {
+  else if (userId !== budget.userId) {
     throw new AppError("Unauthorized access", 401)
   } 
   
-  else if (Object.keys(data).includes('id') || Object.keys(data).includes('isAdm') || Object.keys(data).includes('isActive')) {
-    throw new AppError("You cant change the user's attributes: id, isAdm or isActive", 401)
+  else if (
+    Object.keys(data).includes('id') || 
+    Object.keys(data).includes('userId') || 
+    Object.keys(data).includes('customerId') ||
+    Object.keys(data).includes('stackId') || 
+    Object.keys(data).includes('categoryId')
+  ) {
+    throw new AppError("You cant change these budget's attributes: id, userId, customerId, stackId or categoryId", 401)
   }
 
-  await userRepository.update(idToUpdate, {
-    ...userToUpdate,
-    ...data,
-    password: data.password ? await hash(data.password, 10) : userToUpdate.password
+  await budgetRepository.update(budgetId, {
+    ...budget,
+    ...data
   })
 
-  const updatedUser = await userRepository.findOne({
+  const updatedBudget = await budgetRepository.findOne({
     where: {
-      id: idToUpdate,
+      id: budgetId,
     },
   })
 
-  return updatedUser!
+  return updatedBudget
 }
 
-export default editUserService
+export default updateBudgetService

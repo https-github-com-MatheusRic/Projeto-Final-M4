@@ -5,7 +5,7 @@ export interface IBudgetRequest {
   fixedCost: number
   variableCost: number
   userId: string
-  costumerId: string
+  customerId: string
   stackId: string
   categoryId: string
 }
@@ -18,7 +18,7 @@ export interface IBudget {
   fixedCost: number
   variableCost: number
   userId: string
-  costumerId: string
+  customerId: string
   stackId: string
   categoryId: string
 }
