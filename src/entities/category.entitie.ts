@@ -1,5 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Budget } from './budget.entitie';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Budget } from "./budget.entitie"
 
 @Entity("categories")
 export class Category {
