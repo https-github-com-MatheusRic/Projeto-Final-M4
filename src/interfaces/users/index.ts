@@ -9,7 +9,7 @@ export interface IUserCreate {
 
 export interface IUserLogin {
     email: string, 
-    passworld: string
+    password: string
 }
 
 export interface IUserUpdate {

@@ -5,7 +5,7 @@ import { compare } from "bcryptjs"
 import jwt from 'jsonwebtoken'
 import { User } from "../../entities/user.entitie"
 
-const createSessionService = async ({email, passworld}: IUserLogin): Promise<string> => {
+const createSessionService = async ({email, password}: IUserLogin): Promise<string> => {
 
     const userRepository = AppDataSource.getRepository(User)
     const user = await userRepository.findOneBy({
@@ -15,7 +15,7 @@ const createSessionService = async ({email, passworld}: IUserLogin): Promise<str
     if(!user){
         throw new AppError('Invalid user or password', 403)
     }
-    const passwordValidation =  await compare(passworld, user.password)
+    const passwordValidation =  await compare(password, user.password)
     if(!passwordValidation){
         throw new AppError('Invalid user or password', 403)
     }

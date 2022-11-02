@@ -13,7 +13,7 @@ const createUserService = async (userData: IUserCreate): Promise<User> =>{// fal
     const userAlreadyExist = users.find(user => user.email === email)
 
     if(userAlreadyExist){
-        throw new AppError("Email already registred", 400)
+        throw new AppError("Email already registered", 400)
     }
     if(!password){
         throw new AppError("Password are missing data", 400)
@@ -25,7 +25,7 @@ const createUserService = async (userData: IUserCreate): Promise<User> =>{// fal
         password: hashedPassword
     })
     await userRepository.save(userCreate)
-
+    console.log(userCreate)
     return userCreate
 }
 
