@@ -4,7 +4,7 @@ import { Budget } from "./budget.entitie"
 @Entity("categories")
 export class Category {
     @PrimaryGeneratedColumn("uuid")
-    id: string
+    uuid: string
 
     @Column({ length: 50 })
     name: string

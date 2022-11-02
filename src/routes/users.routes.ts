@@ -8,6 +8,7 @@ import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware"
 const routes = Router()
 
 export const usersRouter = () => {
+
   routes.post("/", createUserControler)
   routes.get("/", ensureAuthMiddleware, listUserController)
   routes.get("/:id", ensureAuthMiddleware, listUniqueUserController)
