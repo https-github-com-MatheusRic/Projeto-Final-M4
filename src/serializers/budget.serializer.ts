@@ -1,0 +1,9 @@
+import * as yup from "yup"
+
+export const createBudgetSerializer = yup.object().shape({
+    projectName: yup.string().required(),
+    projectTime: yup.number().positive().required(),
+    budget: yup.number().positive().required(),
+    fixedCost: yup.number().positive().required(),
+    variableCost: yup.number().positive().required(),
+})
