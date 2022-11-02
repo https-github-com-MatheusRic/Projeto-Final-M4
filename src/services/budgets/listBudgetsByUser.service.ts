@@ -7,11 +7,11 @@ const listBudgetsByUserService = async (userId: string): Promise<Budget[]> => {
 
   const user = await userRepository.findOne({
     where: {
-      uuid: userId
+      uuid: userId,
     },
     relations: {
-      budgets: true
-    }
+      budgets: true,
+    },
   })
 
   return user!.budgets

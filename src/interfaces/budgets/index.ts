@@ -19,5 +19,5 @@ export interface IBudgetUpdate {
   variableCost?: number
 }
 
-export type IBudgetRequest = Omit<IBudget, 'uuid'>
+export type IBudgetRequest = Omit<IBudget, ('uuid' | 'userId')>
 
