@@ -1,22 +1,24 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express"
 
 const validadeSerializerMiddleware =
-  (serializer: any) =>
-  async (req: Request, res: Response, next: NextFunction) => {
+  (serializer: any) => async (
+    req: Request, 
+    res: Response, 
+    next: NextFunction
+) => {
     try {
-      const validateBody = await serializer.validate(req.body, {
+      await serializer.validate(req.body, {
         stripUnknown: true,
         abortEarly: false,
-      });
+      })
 
-      req.validateBody = validateBody;
+      return next()
 
-      console.log(validateBody)
-
-      return next();
-    } catch (error) {
-      return res.status(400).json();
+    } catch (error: any) {
+      return res.status(400).json({
+        message: error.errors
+      })
     }
-  };
+  }
 
 export default validadeSerializerMiddleware;
