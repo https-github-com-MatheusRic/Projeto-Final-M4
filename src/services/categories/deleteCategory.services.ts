@@ -2,6 +2,7 @@ import AppDataSource from "../../data-source";
 import AppError from "../../errors/appError";
 import { Category } from "../../entities/category.entitie";
 
+
 interface IStatusReturn {
   message: string;
   statuscode: number;
@@ -15,6 +16,7 @@ const deleteCategoryServices = async (id: string): Promise<IStatusReturn> => {
     },
   });
 
+
   if (!categoryToDelete) {
     throw new AppError("Category does not exists", 404);
   }
@@ -22,8 +24,11 @@ const deleteCategoryServices = async (id: string): Promise<IStatusReturn> => {
   await categoryRepository.delete(categoryToDelete);
 
   return {
-    message: "Category deleted!",
-    statuscode: 204,
-  };
-};
-export default deleteCategoryServices;
+
+    message: "Category deleted with sucess!",
+    statuscode: 204
+  }
+
+}
+export default deleteCategoryServices
+

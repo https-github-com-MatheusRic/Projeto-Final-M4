@@ -2,6 +2,7 @@ import AppDataSource from "../../data-source";
 import AppError from "../../errors/appError";
 import { Category } from "../../entities/category.entitie";
 
+
 const listOneCategoryServices = async (id: string): Promise<Category | null> => {
   const listOneCategoryRepository = AppDataSource.getRepository(Category);
   const categroryToBeListed = listOneCategoryRepository.findOne({
@@ -9,6 +10,7 @@ const listOneCategoryServices = async (id: string): Promise<Category | null> => 
       uuid: id,
     },
   });
+
 
   if (!categroryToBeListed) {
     throw new AppError("Category does not exists", 404);
