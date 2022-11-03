@@ -8,9 +8,7 @@ const deleteBudgetController = async (req: Request, res: Response) => {
 
   await deleteBudgetService(budgetId, userId)
 
-  return res.status(204).json({
-    message: "Budget deleted!",
-  })
+  return res.status(204).send()
 }
 
 export default deleteBudgetController

@@ -23,7 +23,7 @@ const updateBudgetService = async (
       key !== "variableCost"
     ) {
       throw new AppError(
-        "Accepted fields only: projectName, projectTime, budget, fixedCost and variableCost."
+        "Accepted fields only: projectName, projectTime, budget, fixedCost and variableCost"
       )
     }
   })
@@ -37,10 +37,10 @@ const updateBudgetService = async (
   })
 
   if (!budget) {
-    throw new AppError("Budget not found.", 404)
+    throw new AppError("Budget not found", 404)
   } else if (userId !== budget.user.uuid) {
-    throw new AppError("Unauthorized access.", 401)
-  } 
+    throw new AppError("Unauthorized access", 401)
+  }
 
   await budgetRepository.update(budgetId, {
     ...budget,

@@ -1,6 +1,7 @@
 import AppDataSource from "../../data-source"
-import { Customer } from "../../entities/customer.entitie"
 import AppError from "../../errors/appError"
+
+import { Customer } from "../../entities/customer.entitie"
 import { ICustomerUpdate } from "../../interfaces/customers"
 
 const updateCustomerService = async (
@@ -22,7 +23,8 @@ const updateCustomerService = async (
       key !== "contact"
     ) {
       throw new AppError(
-        "Accepted fields only: name, isCompany, email, contact."
+        "Accepted fields only: name, isCompany, email and contact",
+        401
       )
     }
   })
@@ -31,9 +33,9 @@ const updateCustomerService = async (
   const foundCustomer = await customerRepository.findOneBy({ uuid: id })
 
   if (!foundCustomer) {
-    throw new AppError("Customer not found.", 404)
+    throw new AppError("Customer not found", 404)
   } else if (userId !== foundCustomer.user.uuid) {
-    throw new AppError("Unauthorized access.", 401)
+    throw new AppError("Unauthorized access", 401)
   }
 
   await customerRepository.update(id, {

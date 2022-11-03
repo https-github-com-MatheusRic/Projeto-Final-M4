@@ -4,12 +4,12 @@ import request from "supertest"
 import AppDataSource from "../../../data-source"
 import app from "../../../app"
 
-import { mockedBudget, mockedUser, mockedUserLogin } from "../../mocks"
+import { mockedCustomer, mockedUser, mockedUserLogin } from "../../mocks"
 
 let tokenUser = ""
-let budgetId = ""
+let customerId = ""
 
-describe("DELETE - /budgets/:uuid/ ", () => {
+describe("DELETE - /customers/:uuid/ ", () => {
   let connection: DataSource
 
   beforeAll(async () => {
@@ -24,20 +24,20 @@ describe("DELETE - /budgets/:uuid/ ", () => {
     const resLogin = await request(app).post("/login").send(mockedUserLogin)
     tokenUser = resLogin.body.token
 
-    const resCreateBudget = await request(app)
-      .post("/budgets")
+    const resCreateUser = await request(app)
+      .post("/customers")
       .set("Authorization", `Bearer ${tokenUser}`)
-      .send(mockedBudget)
+      .send(mockedCustomer)
 
-    budgetId = resCreateBudget.body.uuid
+    customerId = resCreateUser.body.uuid
   })
 
   afterAll(async () => {
     await connection.destroy()
   })
 
-  test("Shouldn't be possible to delete a budget without authentication", async () => {
-    const errAuthUser = await request(app).delete(`/budgets/${budgetId}`)
+  test("Shouldn't be possible to delete a customer without authentication", async () => {
+    const errAuthUser = await request(app).delete(`/customers/${customerId}`)
 
     expect(errAuthUser.status).toBe(401)
     expect(errAuthUser.body).toMatchObject({
@@ -45,18 +45,18 @@ describe("DELETE - /budgets/:uuid/ ", () => {
     })
   })
 
-  test("Shouldn't be possible to delete a budget that does not exist", async () => {
-    const resDeleteBudget = await request(app)
-      .delete("/budgets/invalid_id")
+  test("Shouldn't be possible to delete a customer that does not exist", async () => {
+    const resDeleteCustomer = await request(app)
+      .delete("/customers/invalid_id")
       .set("Authorization", `Bearer ${tokenUser}`)
 
-    expect(resDeleteBudget.status).toBe(404)
-    expect(resDeleteBudget.body).toMatchObject({
-      message: "Budget not found",
+    expect(resDeleteCustomer.status).toBe(404)
+    expect(resDeleteCustomer.body).toMatchObject({
+      message: "Customer not found",
     })
   })
 
-  test("Shouldn't be possible to delete a budget from another user", async () => {
+  test("Shouldn't be possible to delete a customer from another user", async () => {
     await request(app)
       .post("/users")
       .send({ ...mockedUser, email: "anotherUser@email.com" })
@@ -66,21 +66,21 @@ describe("DELETE - /budgets/:uuid/ ", () => {
       .send({ ...mockedUserLogin, email: "anotherUser@email.com" })
     const differentToken = resLogin.body.token
 
-    const resDeleteBudget = await request(app)
-      .delete(`/budgets/${budgetId}`)
+    const resDeleteCustomer = await request(app)
+      .delete(`/customers/${customerId}`)
       .set("Authorization", `Bearer ${differentToken}`)
 
-    expect(resDeleteBudget.status).toBe(401)
-    expect(resDeleteBudget.body).toMatchObject({
+    expect(resDeleteCustomer.status).toBe(401)
+    expect(resDeleteCustomer.body).toMatchObject({
       message: "Unauthorized access",
     })
   })
 
-  test("Should be possible to delete the budget", async () => {
-    const resDeleteBudget = await request(app)
-      .delete(`/budgets/${budgetId}`)
+  test("Should be possible to delete the customer", async () => {
+    const resDeleteCustomer = await request(app)
+      .delete(`/customers/${customerId}`)
       .set("Authorization", `Bearer ${tokenUser}`)
 
-    expect(resDeleteBudget.status).toBe(204)
+    expect(resDeleteCustomer.status).toBe(204)
   })
 })
