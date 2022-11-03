@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Budget } from "./budget.entitie"
 
@@ -10,6 +11,7 @@ export class User {
     email: string
 
     @Column({ length: 240 })
+    @Exclude()
     password: string
 
     @Column({ length: 200 })

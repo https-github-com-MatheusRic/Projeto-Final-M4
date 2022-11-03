@@ -1,20 +1,19 @@
 import AppDataSource from "../../data-source";
 import AppError from "../../errors/appError";
-//colocar entities categrory
+import { Category } from "../../entities/category.entitie";
 
-const listOneCategoryServices = async (id:string) => {
-    const listOneCategoryRepository = AppDataSource.getRepository()
-    const categroryToBeListed = listOneCategoryRepository.findOne({
-    where:{
-        id: id
-    }
-    })
+const listOneCategoryServices = async (id: string): Promise<Category | null> => {
+  const listOneCategoryRepository = AppDataSource.getRepository(Category);
+  const categroryToBeListed = listOneCategoryRepository.findOne({
+    where: {
+      uuid: id,
+    },
+  });
 
-    if(!categroryToBeListed){
-        throw new AppError( "Category does not exists", 404)
-    }
+  if (!categroryToBeListed) {
+    throw new AppError("Category does not exists", 404);
+  }
 
-    return categroryToBeListed
-
-}
-export default listOneCategoryServices
+  return categroryToBeListed;
+};
+export default listOneCategoryServices;

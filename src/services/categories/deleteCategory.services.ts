@@ -1,32 +1,29 @@
 import AppDataSource from "../../data-source";
-//import {category} entidade
 import AppError from "../../errors/appError";
-
-// checar regras de negocios , aguardar entitirs e verificar esse retorno da promise
+import { Category } from "../../entities/category.entitie";
 
 interface IStatusReturn {
-    message: string ;
-    statuscode: number;
-  }
+  message: string;
+  statuscode: number;
+}
 
-const deleteCategoryServices = async (id:string): Promise<IStatusReturn> => {
-  const categoryRepository = AppDataSource.getRepository()
+const deleteCategoryServices = async (id: string): Promise<IStatusReturn> => {
+  const categoryRepository = AppDataSource.getRepository(Category);
   const categoryToDelete = await categoryRepository.findOne({
-    where:{
-        id :  id
-    }
-  })
+    where: {
+      uuid: id,
+    },
+  });
 
-  if(!categoryToDelete){
-    throw new AppError( "Category does not exists", 404)
+  if (!categoryToDelete) {
+    throw new AppError("Category does not exists", 404);
   }
 
-  await categoryRepository.delete(categoryToDelete)
+  await categoryRepository.delete(categoryToDelete);
 
   return {
     message: "Category deleted!",
-    statuscode: 204
-  }
-
-}
-export default deleteCategoryServices
+    statuscode: 204,
+  };
+};
+export default deleteCategoryServices;
