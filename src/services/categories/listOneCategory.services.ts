@@ -1,9 +1,11 @@
 import AppDataSource from "../../data-source";
 import AppError from "../../errors/appError";
-//colocar entities categrory
+import { Category } from "../../entities/category.entitie";
+//falta promise?
+
 
 const listOneCategoryServices = async (id:string) => {
-    const listOneCategoryRepository = AppDataSource.getRepository()
+    const listOneCategoryRepository = AppDataSource.getRepository(Category)
     const categroryToBeListed = listOneCategoryRepository.findOne({
     where:{
         id: id

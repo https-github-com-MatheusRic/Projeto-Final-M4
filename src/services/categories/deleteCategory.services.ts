@@ -1,6 +1,7 @@
 import AppDataSource from "../../data-source";
-//import {category} entidade
 import AppError from "../../errors/appError";
+import { Category } from "../../entities/category.entitie";
+
 
 // checar regras de negocios , aguardar entitirs e verificar esse retorno da promise
 
@@ -10,10 +11,10 @@ interface IStatusReturn {
   }
 
 const deleteCategoryServices = async (id:string): Promise<IStatusReturn> => {
-  const categoryRepository = AppDataSource.getRepository()
+  const categoryRepository = AppDataSource.getRepository(Category)
   const categoryToDelete = await categoryRepository.findOne({
     where:{
-        id :  id
+        id : id
     }
   })
 
@@ -24,7 +25,7 @@ const deleteCategoryServices = async (id:string): Promise<IStatusReturn> => {
   await categoryRepository.delete(categoryToDelete)
 
   return {
-    message: "Category deleted!",
+    message: "Category deleted with sucess!",
     statuscode: 204
   }
 

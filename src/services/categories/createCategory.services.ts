@@ -1,16 +1,17 @@
 import AppDataSource from "../../data-source";
 import AppError from "../../errors/appError";
 import { ICategoryRequest } from "../../interfaces/categories";
+import { Category } from "../../entities/category.entitie";
 
-//add promise de arrays de categorias (entities) e add pra pegar no repositoriio 
 
-const createCategoryService = async ({name}:ICategoryRequest): Promise<> => {
 
-    const categoryRepository = AppDataSource.getRepository()
+const createCategoryService = async ({name}:ICategoryRequest): Promise<Category> => {
+
+    const categoryRepository = AppDataSource.getRepository(Category)
 
     const categoryAlreadyExists = await categoryRepository.findOne({
         where:{
-            name
+            name : name
         }
     })
 

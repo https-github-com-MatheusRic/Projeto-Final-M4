@@ -1,8 +1,9 @@
 import AppDataSource from "../../data-source";
+import { Category } from "../../entities/category.entitie";
 
-//add promise de arrays de categorias (entities) e add pra pegar no repositoriio 
-const listCategoriesServices = async (): Promise<> => {
-    const categoriesRepository = AppDataSource.getRepository()
+
+const listCategoriesServices = async (): Promise<Category[]> => {
+    const categoriesRepository = AppDataSource.getRepository(Category)
     const categories = await categoriesRepository.find()
 
     return categories
