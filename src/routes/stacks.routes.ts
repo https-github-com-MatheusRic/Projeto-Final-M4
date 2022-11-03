@@ -14,8 +14,8 @@ const routes = Router()
 export const stacksRouter = () => {
   routes.post("/",validadeSerializerMiddleware(createBudgetStackSerializer),ensureAuthMiddleware,createBudgetStackController)
   routes.get("/",ensureAuthMiddleware,listStackController)
-  routes.get("/:id",ensureAuthMiddleware,listOneStackController )
-  routes.delete("/:id",ensureAuthMiddleware,deleteStackController)
+  routes.get("/:uuid",ensureAuthMiddleware,listOneStackController )
+  routes.delete("/:uuid",ensureAuthMiddleware,deleteStackController)
 
   return routes
 }

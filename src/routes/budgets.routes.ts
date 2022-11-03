@@ -13,9 +13,9 @@ const routes = Router()
 export const budgetsRouter = () => {
   routes.post("/",ensureAuthMiddleware, validadeSerializerMiddleware(createBudgetSerializer), createBudgetController)
   routes.get("/", ensureAuthMiddleware, listBudgetsByUserController)
-  routes.get("/:id", ensureAuthMiddleware, listSpecificBudgetController)
-  routes.patch("/:id", ensureAuthMiddleware, updateBudgetController)
-  routes.delete("/:id", ensureAuthMiddleware, deleteBudgetController)
+  routes.get("/:uuid", ensureAuthMiddleware, listSpecificBudgetController)
+  routes.patch("/:uuid", ensureAuthMiddleware, updateBudgetController)
+  routes.delete("/:uuid", ensureAuthMiddleware, deleteBudgetController)
 
   return routes
 }

@@ -12,8 +12,8 @@ const routes = Router()
 export const categoriesRouter = () => {
   routes.post("/", validadeSerializerMiddleware(createCategorySerializer),ensureAuthMiddleware,createCategoriesControllers)
   routes.get("/",ensureAuthMiddleware, listCategoriesControllers)
-  routes.get("/:id",ensureAuthMiddleware, listOneCategoryControllers)
-  routes.delete("/:id",ensureAuthMiddleware, deleteCategoryControllers)
+  routes.get("/:uuid",ensureAuthMiddleware, listOneCategoryControllers)
+  routes.delete("/:uuid",ensureAuthMiddleware, deleteCategoryControllers)
 
   return routes
 }

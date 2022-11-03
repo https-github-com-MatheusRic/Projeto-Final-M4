@@ -13,9 +13,9 @@ export const usersRouter = () => {
 
   routes.post("/", validadeSerializerMiddleware(createUserSerializer), createUserControler)
   routes.get("/", ensureAuthMiddleware, listUserController)
-  routes.get("/:id", ensureAuthMiddleware, listUniqueUserController)
-  routes.patch("/:id", ensureAuthMiddleware, updateUserController)
-  routes.delete("/:id", ensureAuthMiddleware, deleteUserController)
+  routes.get("/:uuid", ensureAuthMiddleware, listUniqueUserController)
+  routes.patch("/:uuid", ensureAuthMiddleware, updateUserController)
+  routes.delete("/:uuid", ensureAuthMiddleware, deleteUserController)
 
   return routes
 }

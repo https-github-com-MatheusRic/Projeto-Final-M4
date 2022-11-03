@@ -21,14 +21,14 @@ const updateBudgetService = async (
   } else if (userId !== budget.user.uuid) {
     throw new AppError("Unauthorized access.", 401)
   } else if (
-    Object.keys(data).includes("id") ||
+    Object.keys(data).includes("uuid") ||
     Object.keys(data).includes("userId") ||
     Object.keys(data).includes("customerId") ||
     Object.keys(data).includes("stackId") ||
     Object.keys(data).includes("categoryId")
   ) {
     throw new AppError(
-      "You cant change these budget's attributes: id, userId, customerId, stackId or categoryId.",
+      "You cant change these budget's attributes: uuid, userId, customerId, stackId or categoryId.",
       401
     )
   }
