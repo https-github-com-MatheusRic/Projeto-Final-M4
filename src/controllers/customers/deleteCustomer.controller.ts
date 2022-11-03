@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+
 import deleteCustomerService from "../../services/customers/deleteCustomer.service"
 
 const deleteCustomerController = async (req: Request, res: Response) => {

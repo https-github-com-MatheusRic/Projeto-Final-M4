@@ -15,15 +15,15 @@ const createCustomerService = async (
   const customerAlreadyExists = await customerRepository.findOneBy({ email })
 
   if (customerAlreadyExists) {
-    throw new AppError("Customer already exists.", 404)
+    throw new AppError("Customer already exists", 404)
   }
 
   const userRepository = AppDataSource.getRepository(User)
   const user = await userRepository.findOneBy({ uuid: userId })
 
   const newCustomer = customerRepository.create({
-    ...data, 
-    user: user!
+    ...data,
+    user: user!,
   })
 
   await customerRepository.save(newCustomer)

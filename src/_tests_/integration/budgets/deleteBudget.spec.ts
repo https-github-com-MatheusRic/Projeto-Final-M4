@@ -52,7 +52,7 @@ describe("DELETE - /budgets/:uuid/ ", () => {
 
     expect(resDeleteBudget.status).toBe(404)
     expect(resDeleteBudget.body).toMatchObject({
-      message: "Budget not found.",
+      message: "Budget not found",
     })
   })
 
@@ -72,7 +72,7 @@ describe("DELETE - /budgets/:uuid/ ", () => {
 
     expect(resDeleteBudget.status).toBe(401)
     expect(resDeleteBudget.body).toMatchObject({
-      message: "Unauthorized access.",
+      message: "Unauthorized access",
     })
   })
 
@@ -82,8 +82,5 @@ describe("DELETE - /budgets/:uuid/ ", () => {
       .set("Authorization", `Bearer ${tokenUser}`)
 
     expect(resDeleteBudget.status).toBe(204)
-    expect(resDeleteBudget.body).toMatchObject({
-      message: "Budget deleted!",
-    })
   })
 })

@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+
 import listOneCustomerService from "../../services/customers/listOneCustomer.service"
 
 const listOneCustomerController = async (req: Request, res: Response) => {

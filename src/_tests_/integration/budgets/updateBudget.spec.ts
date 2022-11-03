@@ -52,6 +52,17 @@ describe("PATCH - /budgets/:uuid/ ", () => {
     })
   })
 
+  test("Shouldn't be possible to send empty fields", async () => {
+    const resUpdateBudget = await request(app)
+      .patch("/budgets/invalid_id")
+      .set("Authorization", `Bearer ${tokenUser}`)
+      .send()
+
+    expect(resUpdateBudget.body).toMatchObject({
+      message: "No fields to edit",
+    })
+  })
+
   test("Shouldn't be possible to update a budget that does not exist", async () => {
     const resUpdateBudget = await request(app)
       .patch("/budgets/invalid_id")
@@ -60,7 +71,7 @@ describe("PATCH - /budgets/:uuid/ ", () => {
 
     expect(resUpdateBudget.status).toBe(404)
     expect(resUpdateBudget.body).toMatchObject({
-      message: "Budget not found.",
+      message: "Budget not found",
     })
   })
 
@@ -81,11 +92,11 @@ describe("PATCH - /budgets/:uuid/ ", () => {
 
     expect(resUpdateBudget.status).toBe(401)
     expect(resUpdateBudget.body).toMatchObject({
-      message: "Unauthorized access.",
+      message: "Unauthorized access",
     })
   })
 
-  test("Shouldn't be possible to update these budget's attributes: uuid, userId, customerId, stackId or categoryId.", async () => {
+  test("Shouldn't be possible to update these budget's attributes: uuid, userId, customerId, stackId and categoryId.", async () => {
     const resUpdateBudget = await request(app)
       .patch(`/budgets/${budgetId}`)
       .set("Authorization", `Bearer ${tokenUser}`)
@@ -94,7 +105,7 @@ describe("PATCH - /budgets/:uuid/ ", () => {
     expect(resUpdateBudget.status).toBe(401)
     expect(resUpdateBudget.body).toMatchObject({
       message:
-        "You cant change these budget's attributes: uuid, userId, customerId, stackId or categoryId.",
+        "You cant change these budget's attributes: uuid, userId, customerId, stackId or categoryId",
     })
   })
 

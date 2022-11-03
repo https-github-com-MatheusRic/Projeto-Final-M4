@@ -43,11 +43,10 @@ describe("GET - /budgets/", () => {
   })
 
   test("Should be possible to list the user's budgets", async () => {
-    const resUpdateBudget = await request(app)
+    const resListUsersBudgets = await request(app)
       .get("/budgets")
       .set("Authorization", `Bearer ${tokenUser}`)
 
-      
-    expect(resUpdateBudget.body).toHaveProperty("map")
+    expect(resListUsersBudgets.body).toHaveProperty("map")
   })
 })
