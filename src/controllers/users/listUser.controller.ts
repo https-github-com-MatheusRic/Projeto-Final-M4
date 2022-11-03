@@ -5,7 +5,7 @@ import listUniqueUserService from "../../services/users/listUniqueUser.service"
 
 const listUserController = async ( response: Response) => {
     const listedUsers = await listUserService()
-    return response.status(200).json(instanceToPlain(listedUsers))
+    return response.status(200).json(listedUsers)
 }
 
 const listUniqueUserController = async (request: Request, response: Response) => {
