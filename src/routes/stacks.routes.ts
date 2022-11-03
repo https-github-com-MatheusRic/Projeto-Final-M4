@@ -12,8 +12,8 @@ export const stacksRouter = () => {
     validadeSerializerMiddleware(createBudgetStackSerializer),
   )
   routes.get("/")
-  routes.get("/:id")
-  routes.delete("/:id")
+  routes.get("/:uuid")
+  routes.delete("/:uuid")
 
   return routes
 }

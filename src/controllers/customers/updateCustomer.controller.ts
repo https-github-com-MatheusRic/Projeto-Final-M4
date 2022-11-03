@@ -4,7 +4,7 @@ import updateCustomerService from "../../services/customers/updateCustomer.servi
 
 const updateCustomerController = async (req: Request, res: Response) => {
   const dataToEdit: ICustomerUpdate = req.body
-  const customerId: string = req.params.id; 
+  const customerId: string = req.params.uuid; 
 
   const updatedCustomer = await updateCustomerService(dataToEdit, customerId)
 
