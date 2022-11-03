@@ -5,12 +5,13 @@ import { ICustomerUpdate } from "../../interfaces/customers"
 
 const updateCustomerService = async (
   data: ICustomerUpdate,
-  id: string
+  id: string,
+  userId: string
 ): Promise<Customer> => {
   const dataKeys = Object.keys(data)
 
   if (dataKeys.length === 0) {
-    throw new AppError("No fields to edit")
+    throw new AppError("No fields to edit.")
   }
 
   dataKeys.forEach((key) => {
@@ -21,7 +22,7 @@ const updateCustomerService = async (
       key !== "contact"
     ) {
       throw new AppError(
-        "Accepted fields only: name, isCompany, email, contact"
+        "Accepted fields only: name, isCompany, email, contact."
       )
     }
   })
@@ -30,7 +31,9 @@ const updateCustomerService = async (
   const foundCustomer = await customerRepository.findOneBy({ uuid: id })
 
   if (!foundCustomer) {
-    throw new AppError("Customer not found", 404)
+    throw new AppError("Customer not found.", 404)
+  } else if (userId !== foundCustomer.user.uuid) {
+    throw new AppError("Unauthorized access.", 401)
   }
 
   await customerRepository.update(id, {

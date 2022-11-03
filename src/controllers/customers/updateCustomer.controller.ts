@@ -3,10 +3,11 @@ import { ICustomerUpdate } from "../../interfaces/customers"
 import updateCustomerService from "../../services/customers/updateCustomer.service"
 
 const updateCustomerController = async (req: Request, res: Response) => {
-  const dataToEdit: ICustomerUpdate = req.body
-  const customerId: string = req.params.uuid; 
+  const dataToEdit = req.body
+  const customerId = req.params.uuid; 
+  const userId = req.user.uuid
 
-  const updatedCustomer = await updateCustomerService(dataToEdit, customerId)
+  const updatedCustomer = await updateCustomerService(dataToEdit, customerId, userId)
 
   return res.status(200).json(updatedCustomer)
 }
