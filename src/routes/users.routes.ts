@@ -2,6 +2,7 @@ import { Router } from "express"
 import createUserControler from "../controllers/users/createUser.controller"
 import { listUniqueUserController, listUserController } from "../controllers/users/listUser.controller"
 import updateUserController from "../controllers/users/updateUser.controller"
+import deleteUserController from "../controllers/users/deleteUser.controller"
 
 import { createUserSerializer } from "../serializers/user.serializer"
 
@@ -20,7 +21,7 @@ export const usersRouter = () => {
   routes.get("/", ensureAuthMiddleware, listUserController)
   routes.get("/:id", ensureAuthMiddleware, listUniqueUserController)
   routes.patch("/:id", ensureAuthMiddleware, updateUserController)
-  routes.delete("/:id", ensureAuthMiddleware)
+  routes.delete("/:id", ensureAuthMiddleware, deleteUserController)
 
   return routes
 }
