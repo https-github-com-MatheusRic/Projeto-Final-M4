@@ -22,7 +22,7 @@ const ensureAuthMiddleware = (
 
     if (decoded) {
       req.user = {
-        id: decoded.sub,
+        uuid: decoded.sub,
       };
     }
 

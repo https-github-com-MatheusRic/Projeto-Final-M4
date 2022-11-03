@@ -1,6 +1,7 @@
-import { Exclude } from "class-transformer"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Exclude } from "class-transformer"
 import { Budget } from "./budget.entitie"
+import { Customer } from "./customer.entitie"
 
 @Entity("users")
 export class User {
@@ -28,4 +29,7 @@ export class User {
 
     @OneToMany(() => Budget, budget => budget.user)
     budgets: Budget[]
+
+    @OneToMany(() => Customer, customer => customer.user)
+    customers: Customer[]
 }

@@ -1,5 +1,6 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Budget } from './budget.entitie'
+import { User } from "./user.entitie"
 
 @Entity("customers")
 export class Customer {
@@ -12,7 +13,7 @@ export class Customer {
     @Column({ default: false, nullable: true })
     isCompany: boolean
 
-    @Column({ length: 120, nullable: true })
+    @Column({ length: 120 })
     email: string
 
     @Column({ length: 50, nullable: true })
@@ -20,4 +21,7 @@ export class Customer {
 
     @OneToMany(() => Budget, budget => budget.customer)
     budgets: Budget[]
+
+    @ManyToOne(() => User)
+    user: User
 }

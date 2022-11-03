@@ -1,28 +1,29 @@
 import AppDataSource from "../../data-source"
-import { Customer } from "../../entities/customer.entitie"
 import AppError from "../../errors/appError"
+
+import { Customer } from "../../entities/customer.entitie"
+import { User } from "../../entities/user.entitie"
 import { ICustomerRequest } from "../../interfaces/customers"
 
 const createCustomerService = async (
-  data: ICustomerRequest
+  data: ICustomerRequest,
+  userId: string
 ): Promise<Customer> => {
+  const { email } = data
+
   const customerRepository = AppDataSource.getRepository(Customer)
+  const customerAlreadyExists = await customerRepository.findOneBy({ email })
 
-  const dataKeys = Object.keys(data)
+  if (customerAlreadyExists) {
+    throw new AppError("Customer already exists.", 404)
+  }
 
-  dataKeys.forEach((key) => {
-    if (
-      key !== "name" &&
-      key !== "isCompany" &&
-      key !== "email" &&
-      key !== "contact"
-    ) {
-      throw new AppError("Accepted fields only: name, isCompany, email, contact")
-    }
-  })
+  const userRepository = AppDataSource.getRepository(User)
+  const user = await userRepository.findOneBy({ uuid: userId })
 
   const newCustomer = customerRepository.create({
-    ...data,
+    ...data, 
+    user: user!
   })
 
   await customerRepository.save(newCustomer)
