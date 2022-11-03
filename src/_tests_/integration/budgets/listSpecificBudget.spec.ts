@@ -4,8 +4,8 @@ import request from "supertest"
 import AppDataSource from "../../../data-source"
 import app from "../../../app"
 
-import { mockedBudget, mockedUser, mockedUserLogin } from "../../mocks"
 import { IBudget } from "../../../interfaces/budgets"
+import { mockedBudget, mockedUser, mockedUserLogin } from "../../mocks"
 
 let tokenUser = ""
 let budgetId = ""

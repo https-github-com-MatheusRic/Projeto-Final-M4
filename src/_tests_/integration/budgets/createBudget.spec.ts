@@ -1,14 +1,13 @@
 import { DataSource } from "typeorm"
 import request from "supertest"
+import * as uuid from "uuid"
 
 import AppDataSource from "../../../data-source"
 import app from "../../../app"
 
 import { mockedBudget, mockedUser, mockedUserLogin } from "../../mocks"
 
-import * as uuid from "uuid"
 jest.mock("uuid")
-
 let tokenUser = ""
 
 describe("POST - /budgets/", () => {
