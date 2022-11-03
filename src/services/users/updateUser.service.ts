@@ -6,7 +6,7 @@ import { IUserUpdate } from "../../interfaces/users"
 
 const updateUserService = async (data: IUserUpdate, id: string) => {
 
-    const userRepository = AppDataSource.getMongoRepository(User)
+    const userRepository = AppDataSource.getRepository(User)
     const user = await userRepository.findOneBy({
         uuid: id
     })
@@ -14,23 +14,24 @@ const updateUserService = async (data: IUserUpdate, id: string) => {
     if(!user){
         throw new AppError ("User is not Found", 404)
     }
-    if(user.email !== data.email){
+    if(user.uuid !== id){
         throw new AppError("You Only can uptade your own user", 400)
     }
 
     await userRepository.update(
         user!.uuid,
         {
-            email: data.email ? data.email : user.email,
-            password: data.password ? await hash(data.password , 10) : user.email,
-            name: data. name ? data.name : user.name,
+            email: data.email ? user.email : user.email,
+            password: data.password ? await hash(data.password, 10) : user.password,
+            name: data.name ? data.name : user.name,
             username: data.username ? data.username : user.username,
             position: data.position ? data.position : user.position,
-            imageUrl: data.imageUrl ? data.imageUrl : user.position
+            imageUrl: data.imageUrl ? data.imageUrl : user.imageUrl
         }
     )
     
-    return user
+    const userUpdate = await userRepository.findOneBy({uuid: id})
+    return userUpdate
 }
 
 export default updateUserService
