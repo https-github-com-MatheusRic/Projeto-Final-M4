@@ -1,5 +1,6 @@
 import { IUserCreate, IUserLogin } from "../../interfaces/users"
 import { IBudgetRequest, IBudgetUpdate } from "../../interfaces/budgets"
+import { ICustomerRequest, ICustomerUpdate } from "../../interfaces/customers"
 
 export const mockedUser: IUserCreate = {
   email: "test@email.com",
@@ -27,4 +28,15 @@ export const mockedBudget: IBudgetRequest = {
 
 export const mockedBudgetUpdate: IBudgetUpdate = {
   name: "Kenzie Blog",
+}
+
+export const mockedCustomer: ICustomerRequest = {
+  name: "Gabriel",
+  isCompany: false,
+  email: 'gabriel@email.com',
+  contact: '5511988888888'
+}
+
+export const mockedCustomerUpdate: ICustomerUpdate = {
+  name: "Gabriel A.",
 }
