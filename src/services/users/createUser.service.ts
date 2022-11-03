@@ -4,12 +4,14 @@ import AppError from "../../errors/appError"
 import { hash } from "bcryptjs"
 import { User } from "../../entities/user.entitie"
 
-const createUserService = async (userData: IUserCreate): Promise<User> =>{
-
+const createUserService = async (
+    userData: IUserCreate
+): Promise<User> =>{
     const userRepository = AppDataSource.getRepository(User)
+
     const users = await userRepository.find()
 
-    const { email, password} = userData
+    const { email, password } = userData
     const userAlreadyExist = users.find(user => user.email === email)
 
     if(userAlreadyExist){

@@ -18,8 +18,8 @@ export const categoriesRouter = () => {
     createCategoriesControllers
   )
   routes.get("/", listCategoriesControllers)
-  routes.get("/:id", listOneCategoryControllers)
-  routes.delete("/:id", deleteCategoryControllers)
+  routes.get("/:uuid", listOneCategoryControllers)
+  routes.delete("/:uuid", deleteCategoryControllers)
 
   return routes
 }

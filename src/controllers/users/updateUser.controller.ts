@@ -4,7 +4,7 @@ import { instanceToPlain } from 'class-transformer';
 
 const updateUserController = async (request: Request, response: Response) => {
     const data = request.body
-    const id = request.params.id
+    const id = request.params.uuid
     const userUpdated = await updateUserService(data, id)
 
     return response.status(200).json(instanceToPlain(userUpdated))

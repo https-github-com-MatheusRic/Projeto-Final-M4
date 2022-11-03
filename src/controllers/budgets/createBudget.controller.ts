@@ -4,7 +4,7 @@ import createBudgetService from "../../services/budgets/createBudget.service"
 
 const createBudgetController = async (req: Request, res: Response) => {
   const data = req.body
-  const userId = req.user.id
+  const userId = req.user.uuid
   
   const createdBudget = await createBudgetService(userId, data)
 
