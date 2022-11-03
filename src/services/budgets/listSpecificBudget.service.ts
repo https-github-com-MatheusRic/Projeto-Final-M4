@@ -2,7 +2,10 @@ import AppDataSource from "../../data-source"
 import AppError from "../../errors/appError"
 import { Budget } from "../../entities/budget.entitie"
 
-const listSpecificBudgetService = async (budgetId: string, userId: string) => {
+const listSpecificBudgetService = async (
+  budgetId: string,
+  userId: string
+): Promise<Budget> => {
   const budgetRepository = AppDataSource.getRepository(Budget)
 
   const budget = await budgetRepository.findOneBy({ uuid: budgetId })
@@ -13,7 +16,7 @@ const listSpecificBudgetService = async (budgetId: string, userId: string) => {
     throw new AppError("Unauthorized access.", 401)
   }
 
-  return
+  return budget
 }
 
 export default listSpecificBudgetService
