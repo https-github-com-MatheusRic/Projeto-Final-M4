@@ -10,10 +10,6 @@ const createCustomerService = async (
 
   const dataKeys = Object.keys(data)
 
-  if (!dataKeys.includes("name")) {
-    throw new AppError("Name required")
-  }
-
   dataKeys.forEach((key) => {
     if (
       key !== "name" &&
