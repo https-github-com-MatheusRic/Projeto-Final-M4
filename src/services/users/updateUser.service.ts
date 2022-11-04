@@ -4,8 +4,7 @@ import { User } from "../../entities/user.entitie"
 import AppError from "../../errors/appError"
 import { IUserUpdate } from "../../interfaces/users"
 
-const updateUserService = async (data: IUserUpdate, id: string) => {
-
+const updateUserService = async (data: IUserUpdate, id: string): Promise<User | null> => {
     const userRepository = AppDataSource.getRepository(User)
     const user = await userRepository.findOneBy({
         uuid: id

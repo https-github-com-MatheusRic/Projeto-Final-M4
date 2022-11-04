@@ -3,13 +3,9 @@ import AppError from "../../errors/appError";
 import { Category } from "../../entities/category.entitie";
 
 
-const listOneCategoryServices = async (id: string): Promise<Category | null> => {
+const listOneCategoryServices = async (id: string): Promise<Category> => {
   const listOneCategoryRepository = AppDataSource.getRepository(Category);
-  const categroryToBeListed = listOneCategoryRepository.findOne({
-    where: {
-      uuid: id,
-    },
-  });
+  const categroryToBeListed = await listOneCategoryRepository.findOneBy({uuid: id});
 
 
   if (!categroryToBeListed) {
