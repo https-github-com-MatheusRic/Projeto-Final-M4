@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@4c/tsconfig@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@4c/tsconfig/-/tsconfig-0.4.1.tgz#90f7edc7780387788cb6b1d9885b5350ae50431a"
+  integrity sha512-uCS2WRXvDPj/8i6zOWfiLMj/n4AwVRNMy8FhhEdIie2/DT7PkIzomRXL5Hgq2TRcG0g80lgQRtBYiRYcx9xC1A==
+  dependencies:
+    typescript-workspace-plugin "^2.0.1"
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.0.tgz"
@@ -791,6 +798,11 @@
   version "18.11.8"
   resolved "https://registry.npmjs.org/@types/node/-/node-18.11.8.tgz"
   integrity sha512-uGwPWlE0Hj972KkHtCDVwZ8O39GmyjfMane1Z3GUBGGnkZ2USDq7SxLpVIiIHpweY9DS0QTDH0Nw7RNBsAAZ5A==
+
+"@types/node@^18.11.9":
+  version "18.11.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.9.tgz#02d013de7058cea16d36168ef2fc653464cfbad4"
+  integrity sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==
 
 "@types/prettier@^2.1.5":
   version "2.7.1"
@@ -3789,6 +3801,11 @@ typeorm@^0.3.10:
     xml2js "^0.4.23"
     yargs "^17.3.1"
 
+typescript-workspace-plugin@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/typescript-workspace-plugin/-/typescript-workspace-plugin-2.0.1.tgz#3d88be1c35a7fdf2c0160c8cf569ca8993439a12"
+  integrity sha512-xjIYNFlPIA7IWXvnOFJoAeHPbPJSo0AiQDCRJzaAp3+xZwz6maTgeRLB0oEHVtCqz4Q1CDN6U9kh/2z8sxdDBQ==
+
 typescript@^4.8.4:
   version "4.8.4"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.8.4.tgz"
@@ -3990,7 +4007,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-yup@*, yup@^0.32.11:
+yup@^0.32.11:
   version "0.32.11"
   resolved "https://registry.npmjs.org/yup/-/yup-0.32.11.tgz"
   integrity sha512-Z2Fe1bn+eLstG8DRR6FTavGD+MeAwyfmouhHsIUgaADz8jvFKbO/fXc2trJKZg+5EBjh4gGm3iU/t3onKlXHIg==

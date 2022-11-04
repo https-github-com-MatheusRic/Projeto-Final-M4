@@ -11,7 +11,7 @@ let tokenUser = ""
 let budgetId = ""
 let budget: IBudget
 
-describe("GET - /budgets/:id/", () => {
+describe("GET - /budgets/:uuid/", () => {
   let connection: DataSource
 
   beforeAll(async () => {
@@ -55,7 +55,7 @@ describe("GET - /budgets/:id/", () => {
 
     expect(resListSpecificBudget.status).toBe(404)
     expect(resListSpecificBudget.body).toMatchObject({
-      message: "Budget not found.",
+      message: "Budget not found",
     })
   })
 
@@ -75,7 +75,7 @@ describe("GET - /budgets/:id/", () => {
 
     expect(resListSpecificBudget.status).toBe(401)
     expect(resListSpecificBudget.body).toMatchObject({
-      message: "Unauthorized access.",
+      message: "Unauthorized access",
     })
   })
 

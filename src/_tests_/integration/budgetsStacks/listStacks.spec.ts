@@ -4,11 +4,11 @@ import request from "supertest"
 import AppDataSource from "../../../data-source"
 import app from "../../../app"
 
-import { mockedBudget, mockedUser, mockedUserLogin } from "../../mocks"
+import { mockedBudgetStack, mockedUser, mockedUserLogin } from "../../mocks"
 
 let tokenUser = ""
 
-describe("GET - /budgets/", () => {
+describe("GET - /stacks/", () => {
   let connection: DataSource
 
   beforeAll(async () => {
@@ -24,17 +24,17 @@ describe("GET - /budgets/", () => {
     tokenUser = resLogin.body.token
 
     await request(app)
-      .post("/budgets")
+      .post("/stacks")
       .set("Authorization", `Bearer ${tokenUser}`)
-      .send(mockedBudget)
+      .send(mockedBudgetStack)
   })
 
   afterAll(async () => {
     await connection.destroy()
   })
 
-  test("Shouldn't be possible to list the user's budgets without authentication", async () => {
-    const errAuthUser = await request(app).get("/budgets")
+  test("Shouldn't be possible to list the budgets stacks without authentication", async () => {
+    const errAuthUser = await request(app).get("/stacks")
 
     expect(errAuthUser.status).toBe(401)
     expect(errAuthUser.body).toMatchObject({
@@ -42,11 +42,12 @@ describe("GET - /budgets/", () => {
     })
   })
 
-  test("Should be possible to list the user's budgets", async () => {
-    const resListUsersBudgets = await request(app)
-      .get("/budgets")
+  test("Should be possible to list the budget stacks", async () => {
+    const resListBudgetStacks = await request(app)
+      .get("/stacks")
       .set("Authorization", `Bearer ${tokenUser}`)
 
-    expect(resListUsersBudgets.body).toHaveProperty("map")
+    expect(resListBudgetStacks.status).toBe(200)
+    expect(resListBudgetStacks.body).toHaveProperty("map")
   })
 })

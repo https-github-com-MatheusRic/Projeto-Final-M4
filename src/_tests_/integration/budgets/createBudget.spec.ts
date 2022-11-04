@@ -19,6 +19,11 @@ describe("POST - /budgets/", () => {
       .catch((err) => {
         console.error("Error during Data Source initialization", err)
       })
+
+    await request(app).post("/users").send(mockedUser)
+
+    const resLogin = await request(app).post("/login").send(mockedUserLogin)
+    tokenUser = resLogin.body.token
   })
 
   afterAll(async () => {
@@ -35,11 +40,6 @@ describe("POST - /budgets/", () => {
   })
 
   test("Shouldn't be possible to create a new budget with a customer that does not exist", async () => {
-    await request(app).post("/users").send(mockedUser)
-
-    const resLogin = await request(app).post("/login").send(mockedUserLogin)
-    tokenUser = resLogin.body.token
-
     const budgetData = { ...mockedBudget, customerId: "invalid_id" }
 
     const resCreateBudget = await request(app)
@@ -49,7 +49,7 @@ describe("POST - /budgets/", () => {
 
     expect(resCreateBudget.status).toBe(404)
     expect(resCreateBudget.body).toMatchObject({
-      message: "Customer not found.",
+      message: "Customer not found",
     })
   })
 
@@ -63,7 +63,7 @@ describe("POST - /budgets/", () => {
 
     expect(resCreateBudget.status).toBe(404)
     expect(resCreateBudget.body).toMatchObject({
-      message: "Stack not found.",
+      message: "Stack not found",
     })
   })
 
@@ -77,7 +77,7 @@ describe("POST - /budgets/", () => {
 
     expect(resCreateBudget.status).toBe(404)
     expect(resCreateBudget.body).toMatchObject({
-      message: "Category not found.",
+      message: "Category not found",
     })
   })
 

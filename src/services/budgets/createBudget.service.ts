@@ -28,21 +28,21 @@ const createBudgetService = async (
   const customer = await customerRepository.findOneBy({ uuid: customerId })
 
   if (!customer) {
-    throw new AppError("Customer not found.", 404)
+    throw new AppError("Customer not found", 404)
   }
 
   const stackRepository = AppDataSource.getRepository(BudgetStack)
   const budgetStack = await stackRepository.findOneBy({ uuid: budgetStackId })
 
   if (!budgetStack) {
-    throw new AppError("Stack not found.", 404)
+    throw new AppError("Stack not found", 404)
   }
 
   const categoryRepository = AppDataSource.getRepository(Category)
   const category = await categoryRepository.findOneBy({ uuid: categoryId })
 
   if (!category) {
-    throw new AppError("Category not found.", 404)
+    throw new AppError("Category not found", 404)
   }
 
   const budgetRepository = AppDataSource.getRepository(Budget)

@@ -4,8 +4,8 @@ import updateBudgetService from "../../services/budgets/updateBudget.service"
 
 const updateBudgetController = async (req: Request, res: Response) => {
   const data = req.body
-  const userId = req.user.id
-  const budgetId = req.params.id
+  const userId = req.user.uuid
+  const budgetId = req.params.uuid
 
   const updatedBudget = await updateBudgetService(data, budgetId, userId)
 

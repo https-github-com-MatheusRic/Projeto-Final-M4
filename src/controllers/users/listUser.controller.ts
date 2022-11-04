@@ -9,7 +9,7 @@ const listUserController = async ( request: Request, response: Response) => {
 }
 
 const listUniqueUserController = async (request: Request, response: Response) => {
-    const id = request.params.id
+    const id = request.params.uuid
     const listedUsers = await listUniqueUserService(id)
     return response.status(200).json(instanceToPlain(listedUsers))
 }
