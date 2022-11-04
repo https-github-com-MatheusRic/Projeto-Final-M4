@@ -12,7 +12,7 @@ const deleteStackService = async (id: string): Promise<IStatusReturn> => {
   const stackToDelete = await deleteStackRepository.findOneBy({ uuid: id })
 
   if (!stackToDelete) {
-    throw new AppError("Stack does not exists", 404)
+    throw new AppError("Budget stack not found", 404)
   }
 
   await deleteStackRepository.delete(stackToDelete)
