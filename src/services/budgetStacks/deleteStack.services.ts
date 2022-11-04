@@ -1,22 +1,18 @@
-import AppDataSource from "../../data-source";
-import AppError from "../../errors/appError";
-import { BudgetStack } from "../../entities/budgetStack.entitie";
+import AppDataSource from "../../data-source"
+import AppError from "../../errors/appError"
+import { BudgetStack } from "../../entities/budgetStack.entitie"
 
 interface IStatusReturn {
-    message: string ;
-    statuscode: number;
-  }
+  message: string
+  statuscode: number
+}
 
-const deleteStackService = async (id:string): Promise<IStatusReturn> => {
+const deleteStackService = async (id: string): Promise<IStatusReturn> => {
   const deleteStackRepository = AppDataSource.getRepository(BudgetStack)
-  const stackToDelete = await deleteStackRepository.findOne({
-    where:{
-        uuid : id
-    }
-  })
+  const stackToDelete = await deleteStackRepository.findOneBy({ uuid: id })
 
-  if(!stackToDelete){
-    throw new AppError( "Stack does not exists", 404)
+  if (!stackToDelete) {
+    throw new AppError("Stack does not exists", 404)
   }
 
   await deleteStackRepository.delete(stackToDelete)

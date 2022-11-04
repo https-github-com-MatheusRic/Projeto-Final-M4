@@ -6,7 +6,6 @@ const listCategoriesServices = async (): Promise<Category[]> => {
   const categoriesRepository = AppDataSource.getRepository(Category);
   const categories = await categoriesRepository.find();
 
-
   return categories;
 };
 export default listCategoriesServices;

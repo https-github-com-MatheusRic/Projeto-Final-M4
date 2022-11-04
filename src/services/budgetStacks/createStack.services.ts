@@ -1,15 +1,11 @@
-import AppDataSource from "../../data-source";
-import AppError from "../../errors/appError";
-import { IBudgetStack } from "../../interfaces/budgetsStacks";
-import { BudgetStack } from "../../entities/budgetStack.entitie";
+import AppDataSource from "../../data-source"
+import AppError from "../../errors/appError"
+import { IBudgetStack } from "../../interfaces/budgetsStacks"
+import { BudgetStack } from "../../entities/budgetStack.entitie"
 
-const createBudgetStackService = async ({stack}: IBudgetStack): Promise<BudgetStack> => {
+const createBudgetStackService = async ({ stack }: IBudgetStack): Promise<BudgetStack> => {
     const budgetStackRepository = AppDataSource.getRepository(BudgetStack)
-    const budgetsStackAlreadyExists = await budgetStackRepository.findOne({
-        where:{
-            stack : stack
-        }
-    })
+    const budgetsStackAlreadyExists = await budgetStackRepository.findOneBy({ stack })
 
     if(budgetsStackAlreadyExists){
         throw new AppError("Category already exists",400)

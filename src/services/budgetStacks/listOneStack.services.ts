@@ -1,22 +1,15 @@
-import AppDataSource from "../../data-source";
-import AppError from "../../errors/appError";
-import { BudgetStack } from "../../entities/budgetStack.entitie";
-//falta promise?
+import AppDataSource from "../../data-source"
+import AppError from "../../errors/appError"
+import { BudgetStack } from "../../entities/budgetStack.entitie"
 
-const listOneStackService = async (id: string)  => {
+const listOneStackService = async (id: string): Promise<BudgetStack>  => {
    const listOneStackRepository = AppDataSource.getRepository(BudgetStack)
-   const stackToBeListed = await listOneStackRepository.findOne({
-    where:{
-        uuid : id
-    }
-   })
+   const stackToBeListed = await listOneStackRepository.findOneBy({ uuid: id })
 
    if(!stackToBeListed){
     throw new AppError( "Stack does not exists", 404)
    }
 
    return stackToBeListed
-
-
 }
 export default listOneStackService
