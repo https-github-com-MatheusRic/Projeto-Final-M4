@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import listCategoriesServices from "../../services/categories/listCategories.services";
+import { Request, Response } from "express"
+import listCategoriesServices from "../../services/categories/listCategories.services"
 
 const listCategoriesControllers = async (req: Request ,  res: Response) => {
     const listedCategories = await listCategoriesServices()
