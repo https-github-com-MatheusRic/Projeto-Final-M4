@@ -1,13 +1,11 @@
 import { DataSource } from "typeorm"
 import request from "supertest"
-import * as uuid from "uuid"
 
 import AppDataSource from "../../../data-source"
 import app from "../../../app"
 
 import { mockedBudgetStack, mockedUser, mockedUserLogin } from "../../mocks"
 
-jest.mock("uuid")
 let tokenUser = ""
 
 describe("POST - /stacks/", () => {
@@ -41,19 +39,15 @@ describe("POST - /stacks/", () => {
 
   
   test("Should be possible to create a new budget stack", async () => {
-    const uuidSpy = jest.spyOn(uuid, "v4")
-    uuidSpy.mockReturnValue("some-uuid")
-
+    
     const resCreateBudgetStack = await request(app)
       .post("/stacks")
       .set("Authorization", `Bearer ${tokenUser}`)
       .send(mockedBudgetStack)
 
     expect(resCreateBudgetStack.status).toBe(201)
-    expect(uuidSpy).toHaveBeenCalled()
     expect(resCreateBudgetStack.body).toEqual(
       expect.objectContaining({
-        uuid: "some-uuid",
         stack: "Full Stack"
       })
     )

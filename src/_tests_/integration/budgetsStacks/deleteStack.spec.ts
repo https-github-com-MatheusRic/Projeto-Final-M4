@@ -62,8 +62,5 @@ describe("DELETE - /stacks/:uuid/ ", () => {
       .set("Authorization", `Bearer ${tokenUser}`)
 
     expect(resDeleteBudgetStack.status).toBe(204)
-    expect(resDeleteBudgetStack.body).toMatchObject({
-        message: "Stack deleted with sucess!",
-    })
   })
 })

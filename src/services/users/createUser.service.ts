@@ -27,7 +27,7 @@ const createUserService = async (
         password: hashedPassword
     })
     await userRepository.save(userCreate)
-    console.log(userCreate)
+    
     return userCreate
 }
 
