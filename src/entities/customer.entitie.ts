@@ -1,4 +1,5 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { usersRouter } from "../routes/users.routes"
 import { Budget } from './budget.entitie'
 import { User } from "./user.entitie"
 
@@ -22,6 +23,6 @@ export class Customer {
     @OneToMany(() => Budget, budget => budget.customer)
     budgets: Budget[]
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User )
     user: User
 }

@@ -7,19 +7,16 @@ interface IStatusReturn {
   statuscode: number
 }
 
-const deleteStackService = async (id: string): Promise<IStatusReturn> => {
+const deleteStackService = async (id: string): Promise<void> => {
   const deleteStackRepository = AppDataSource.getRepository(BudgetStack)
   const stackToDelete = await deleteStackRepository.findOneBy({ uuid: id })
 
   if (!stackToDelete) {
-    throw new AppError("Stack does not exists", 404)
+    throw new AppError("Budget stack not found", 404)
   }
 
   await deleteStackRepository.delete(stackToDelete)
 
-  return {
-    message: "Stack deleted with sucess!",
-    statuscode: 204
-  }
+  return 
 }
 export default deleteStackService

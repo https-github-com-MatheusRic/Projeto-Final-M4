@@ -3,8 +3,8 @@ import deleteStackService from "../../services/budgetStacks/deleteStack.services
 
 const deleteStackController = async (req: Request , res: Response) => {
     const id = req.params.uuid
-    const stackDeleted = await deleteStackService(id)
+    await deleteStackService(id)
 
-    return res.status(204).json(stackDeleted)
+    return res.status(204).send()
 }
 export default deleteStackController

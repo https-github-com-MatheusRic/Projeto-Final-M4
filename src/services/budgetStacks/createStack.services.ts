@@ -8,7 +8,7 @@ const createBudgetStackService = async ({ stack }: IBudgetStack): Promise<Budget
     const budgetsStackAlreadyExists = await budgetStackRepository.findOneBy({ stack })
 
     if(budgetsStackAlreadyExists){
-        throw new AppError("Category already exists",400)
+        throw new AppError("Category already exists",404)
     }
 
     const newBudgetStack = budgetStackRepository.create({

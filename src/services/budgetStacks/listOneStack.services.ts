@@ -7,7 +7,7 @@ const listOneStackService = async (id: string): Promise<BudgetStack>  => {
    const stackToBeListed = await listOneStackRepository.findOneBy({ uuid: id })
 
    if(!stackToBeListed){
-    throw new AppError( "Stack does not exists", 404)
+    throw new AppError( "Budget stack not found", 404)
    }
 
    return stackToBeListed
