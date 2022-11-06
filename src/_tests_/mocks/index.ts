@@ -1,4 +1,4 @@
-import { IUserCreate, IUserLogin } from "../../interfaces/users"
+import { IUserCreate, IUserLogin, IUserUpdate } from "../../interfaces/users"
 import { IBudgetRequest, IBudgetUpdate } from "../../interfaces/budgets"
 import { ICustomerRequest, ICustomerUpdate } from "../../interfaces/customers"
 import { IBudgetStack } from "../../interfaces/budgetsStacks"
