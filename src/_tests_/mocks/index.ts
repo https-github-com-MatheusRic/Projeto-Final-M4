@@ -1,3 +1,4 @@
+import { IUserWithId } from "./../../interfaces/users/index";
 import { IUserCreate, IUserLogin, IUserUpdate } from "../../interfaces/users";
 import { IBudgetRequest, IBudgetUpdate } from "../../interfaces/budgets";
 import { ICustomerRequest, ICustomerUpdate } from "../../interfaces/customers";
@@ -19,6 +20,15 @@ export const mockedUserLogin: IUserLogin = {
 
 export const mockedUserUpdate: IUserUpdate = {
   name: "Bruna 2",
+};
+
+export const mockedUserWithId: IUserWithId = {
+  uuid: "5acc14fd-50a9-4f26-b377-979f9d8410dc",
+  name: "Bruna",
+  username: "Buninha",
+  email: "bruna@kenzie.com",
+  password: "123456789",
+  position: "senior",
 };
 
 export const mockedCustomer: ICustomerRequest = {

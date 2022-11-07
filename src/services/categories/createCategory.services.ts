@@ -8,19 +8,18 @@ const createCategoryService = async ({
 }: ICategoryRequest): Promise<Category> => {
   const categoryRepository = AppDataSource.getRepository(Category)
 
-  const categoryAlreadyExists = await categoryRepository.findOneBy({name})
+  const categoryAlreadyExists = await categoryRepository.findOneBy({ name })
 
   if (categoryAlreadyExists) {
-    throw new AppError("Category already exists", 400);
+    throw new AppError("Category already exists", 400)
   }
 
   const newCategory = categoryRepository.create({
     name,
   })
 
-  await categoryRepository.save(newCategory);
+  await categoryRepository.save(newCategory)
 
-  return newCategory;
+  return newCategory
 }
 export default createCategoryService
- 
