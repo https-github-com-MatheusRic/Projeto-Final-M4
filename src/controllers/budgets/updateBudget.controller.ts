@@ -9,7 +9,26 @@ const updateBudgetController = async (req: Request, res: Response) => {
 
   const updatedBudget = await updateBudgetService(data, budgetId, userId)
 
-  return res.status(201).json(updatedBudget)
+  const response = {...updatedBudget,
+    user: {
+      uuid: updatedBudget.user.uuid,
+      name: updatedBudget.user.name,
+    },
+    category: {
+      uuid: updatedBudget.category.uuid,
+      name: updatedBudget.category.name,
+    },
+    customer: {
+      uuid: updatedBudget.customer.uuid,
+      name: updatedBudget.customer.name,
+    },
+    stack: {
+      uuid: updatedBudget.budgetStack.uuid,
+      name: updatedBudget.budgetStack.stack,
+    },
+  }
+
+  return res.status(201).json(response)
 }
 
 export default updateBudgetController

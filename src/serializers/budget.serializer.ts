@@ -6,7 +6,6 @@ export const createBudgetSerializer = yup.object().shape({
     budget: yup.number().positive().required(),
     fixedCost: yup.number().positive().required(),
     variableCost: yup.number().positive().required(),
-    userId: yup.string().required(),
     categoryId: yup.string().required(),
     customerId: yup.string().required(),
     budgetStackId: yup.string().required()

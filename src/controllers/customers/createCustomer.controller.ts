@@ -7,16 +7,12 @@ const createCustomerController = async (req: Request, res: Response) => {
   const userId = req.user.uuid
 
   const createdCustomer = await createCustomerService(data, userId)
+
   const response = {
-    uuid: createdCustomer.uuid,
-    name: createdCustomer.name,
-    email: createdCustomer.email,
-    isCompany: createdCustomer.isCompany,
-    contact: createdCustomer.contact,
+    ...createdCustomer,
     user: {
       uuid: createdCustomer.user.uuid,
       name: createdCustomer.user.name,
-      email: createdCustomer.user.email,
     },
   }
 

@@ -1,21 +1,22 @@
 import AppDataSource from "../../data-source"
 
 import { Budget } from "../../entities/budget.entitie"
-import { User } from "../../entities/user.entitie"
 
 const listBudgetsByUserService = async (userId: string): Promise<Budget[]> => {
-  const userRepository = AppDataSource.getRepository(User)
+  const budgetRepository = AppDataSource.getRepository(Budget)
 
-  const user = await userRepository.findOne({
-    where: {
-      uuid: userId,
-    },
+  const budgets = await budgetRepository.find({
     relations: {
-      budgets: true,
+      user: true,
+      category: true,
+      budgetStack: true,
+      customer: true,
     },
   })
-
-  return user!.budgets
+  
+  const res = budgets.filter(budget => budget.user.uuid === userId)
+  
+  return res
 }
 
 export default listBudgetsByUserService

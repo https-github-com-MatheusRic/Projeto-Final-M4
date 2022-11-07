@@ -8,7 +8,26 @@ const createBudgetController = async (req: Request, res: Response) => {
 
   const createdBudget = await createBudgetService(userId, data)
 
-  return res.status(201).json(createdBudget)
+  const response = {...createdBudget,
+    user: {
+      uuid: createdBudget.user.uuid,
+      name: createdBudget.user.name,
+    },
+    category: {
+      uuid: createdBudget.category.uuid,
+      name: createdBudget.category.name,
+    },
+    customer: {
+      uuid: createdBudget.customer.uuid,
+      name: createdBudget.customer.name,
+    },
+    stack: {
+      uuid: createdBudget.budgetStack.uuid,
+      name: createdBudget.budgetStack.stack,
+    },
+  }
+
+  return res.status(201).json(response)
 }
 
 export default createBudgetController

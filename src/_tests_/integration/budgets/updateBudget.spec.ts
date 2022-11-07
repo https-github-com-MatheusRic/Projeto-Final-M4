@@ -6,11 +6,17 @@ import app from "../../../app"
 
 import {
   mockedBudget,
+  mockedBudgetStack,
   mockedBudgetUpdate,
+  mockedCategory,
+  mockedCustomer,
   mockedUser,
   mockedUserLogin,
 } from "../../mocks"
 
+let customerId: any
+let categoryId: any
+let budgetStackId: any
 let tokenUser = ""
 let budgetId = ""
 
@@ -29,10 +35,33 @@ describe("PATCH - /budgets/:uuid/ ", () => {
     const resLogin = await request(app).post("/login").send(mockedUserLogin)
     tokenUser = resLogin.body.token
 
+    const resCustomer = await request(app)
+      .post("/customers")
+      .set("Authorization", `Bearer ${tokenUser}`)
+      .send(mockedCustomer)
+    customerId = resCustomer.body.uuid
+
+    const resCategory = await request(app)
+      .post("/categories")
+      .set("Authorization", `Bearer ${tokenUser}`)
+      .send(mockedCategory)
+    categoryId = resCategory.body.uuid
+
+    const resBudgetStack = await request(app)
+      .post("/stacks")
+      .set("Authorization", `Bearer ${tokenUser}`)
+      .send(mockedBudgetStack)
+    budgetStackId = resBudgetStack.body.uuid
+
     const resCreateBudget = await request(app)
       .post("/budgets")
       .set("Authorization", `Bearer ${tokenUser}`)
-      .send(mockedBudget)
+      .send({
+        ...mockedBudget,
+        customerId,
+        categoryId,
+        budgetStackId,
+      })
 
     budgetId = resCreateBudget.body.uuid
   })
@@ -102,10 +131,10 @@ describe("PATCH - /budgets/:uuid/ ", () => {
       .set("Authorization", `Bearer ${tokenUser}`)
       .send({ ...mockedBudgetUpdate, uuid: "new_uuid" })
 
-    expect(resUpdateBudget.status).toBe(401)
+    expect(resUpdateBudget.status).toBe(400)
     expect(resUpdateBudget.body).toMatchObject({
       message:
-        "You cant change these budget's attributes: uuid, userId, customerId, stackId or categoryId",
+        "Accepted fields only: projectName, projectTime, budget, fixedCost and variableCost",
     })
   })
 
@@ -116,6 +145,6 @@ describe("PATCH - /budgets/:uuid/ ", () => {
       .send(mockedBudgetUpdate)
 
     expect(resUpdateBudget.status).toBe(201)
-    expect(resUpdateBudget.body[0].name).toEqual("Kenzie Blog")
+    expect(resUpdateBudget.body.projectName).toEqual("Kenzie Blog")
   })
 })

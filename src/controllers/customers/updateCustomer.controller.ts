@@ -12,8 +12,12 @@ const updateCustomerController = async (req: Request, res: Response) => {
     customerId,
     userId
   )
+  const response = {...updatedCustomer, user: {
+    uuid: updatedCustomer.user?.uuid,
+    name: updatedCustomer.user?.name
+  }}
 
-  return res.status(201).json(updatedCustomer)
+  return res.status(201).json(response)
 }
 
 export default updateCustomerController

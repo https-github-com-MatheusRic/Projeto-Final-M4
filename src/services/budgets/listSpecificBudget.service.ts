@@ -9,7 +9,17 @@ const listSpecificBudgetService = async (
 ): Promise<Budget> => {
   const budgetRepository = AppDataSource.getRepository(Budget)
 
-  const budget = await budgetRepository.findOneBy({ uuid: budgetId })
+  const budget = await budgetRepository.findOne({
+    where: {
+      uuid: budgetId,
+    },
+    relations: {
+      user: true,
+      category: true,
+      budgetStack: true,
+      customer: true
+    },
+  })
 
   if (!budget) {
     throw new AppError("Budget not found", 404)

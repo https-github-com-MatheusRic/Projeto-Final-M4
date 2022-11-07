@@ -13,8 +13,8 @@ const routes = Router()
 
 export const costumersRouter = () => {
   routes.post(
-    "/", 
-    validadeSerializerMiddleware(createCustomerSerializer), 
+    "/",
+    validadeSerializerMiddleware(createCustomerSerializer),
     ensureAuthMiddleware,
     createCustomerController
   )

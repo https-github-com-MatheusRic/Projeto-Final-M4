@@ -1,14 +1,22 @@
 import { DataSource } from "typeorm"
 import request from "supertest"
-import * as uuid from "uuid"
 
 import AppDataSource from "../../../data-source"
 import app from "../../../app"
 
-import { mockedBudget, mockedUser, mockedUserLogin } from "../../mocks"
+import {
+  mockedBudget,
+  mockedBudgetStack,
+  mockedCategory,
+  mockedCustomer,
+  mockedUser,
+  mockedUserLogin,
+} from "../../mocks"
 
-jest.mock("uuid")
 let tokenUser = ""
+let customerId: any
+let categoryId: any
+let budgetStackId: any
 
 describe("POST - /budgets/", () => {
   let connection: DataSource
@@ -24,6 +32,24 @@ describe("POST - /budgets/", () => {
 
     const resLogin = await request(app).post("/login").send(mockedUserLogin)
     tokenUser = resLogin.body.token
+
+    const resCustomer = await request(app)
+      .post("/customers")
+      .set("Authorization", `Bearer ${tokenUser}`)
+      .send(mockedCustomer)
+    customerId = resCustomer.body.uuid
+
+    const resCategory = await request(app)
+      .post("/categories")
+      .set("Authorization", `Bearer ${tokenUser}`)
+      .send(mockedCategory)
+    categoryId = resCategory.body.uuid
+
+    const resBudgetStack = await request(app)
+      .post("/stacks")
+      .set("Authorization", `Bearer ${tokenUser}`)
+      .send(mockedBudgetStack)
+    budgetStackId = resBudgetStack.body.uuid
   })
 
   afterAll(async () => {
@@ -40,7 +66,12 @@ describe("POST - /budgets/", () => {
   })
 
   test("Shouldn't be possible to create a new budget with a customer that does not exist", async () => {
-    const budgetData = { ...mockedBudget, customerId: "invalid_id" }
+    const budgetData = {
+      ...mockedBudget,
+      customerId: "invalid_id",
+      categoryId,
+      budgetStackId,
+    }
 
     const resCreateBudget = await request(app)
       .post("/budgets")
@@ -54,7 +85,12 @@ describe("POST - /budgets/", () => {
   })
 
   test("Shouldn't be possible to create a new budget with a budget stack that does not exist", async () => {
-    const budgetData = { ...mockedBudget, budgetStackId: "invalid_id" }
+    const budgetData = {
+      ...mockedBudget,
+      customerId,
+      categoryId,
+      budgetStackId: "invalid_id",
+    }
 
     const resCreateBudget = await request(app)
       .post("/budgets")
@@ -68,7 +104,12 @@ describe("POST - /budgets/", () => {
   })
 
   test("Shouldn't be possible to create a new budget with a category that does not exist", async () => {
-    const budgetData = { ...mockedBudget, categoryId: "invalid_id" }
+    const budgetData = {
+      ...mockedBudget,
+      customerId,
+      categoryId: "invalid_id",
+      budgetStackId,
+    }
 
     const resCreateBudget = await request(app)
       .post("/budgets")
@@ -82,29 +123,26 @@ describe("POST - /budgets/", () => {
   })
 
   test("Should be possible to create a new budget", async () => {
-    const uuidSpy = jest.spyOn(uuid, "v4")
-    uuidSpy.mockReturnValue("some-uuid")
-
     const resCreateBudget = await request(app)
       .post("/budgets")
       .set("Authorization", `Bearer ${tokenUser}`)
-      .send(mockedBudget)
+      .send({
+        ...mockedBudget,
+        customerId,
+        categoryId,
+        budgetStackId,
+      })
 
     expect(resCreateBudget.status).toBe(201)
-    expect(uuidSpy).toHaveBeenCalled()
-    expect(resCreateBudget.body).toEqual(
-      expect.objectContaining({
-        uuid: "some-uuid",
-        projectName: "Kenzie News",
-        projectTime: 25,
-        budget: 4500,
-        fixedCost: 4000,
-        variableCos: 500,
-        userId: "",
-        categoryId: "",
-        customerId: "",
-        budgetStackId: "",
-      })
-    )
+    expect(resCreateBudget.body).toHaveProperty("uuid")
+    expect(resCreateBudget.body).toHaveProperty("projectName")
+    expect(resCreateBudget.body).toHaveProperty("projectTime")
+    expect(resCreateBudget.body).toHaveProperty("budget")
+    expect(resCreateBudget.body).toHaveProperty("fixedCost")
+    expect(resCreateBudget.body).toHaveProperty("variableCost")
+    expect(resCreateBudget.body).toHaveProperty("user")
+    expect(resCreateBudget.body).toHaveProperty("category")
+    expect(resCreateBudget.body).toHaveProperty("customer")
+    expect(resCreateBudget.body).toHaveProperty("stack")
   })
 })
