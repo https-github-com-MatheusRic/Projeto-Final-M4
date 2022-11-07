@@ -51,7 +51,7 @@ export const mockedBudgetStack: IBudgetStack = {
 };
 
 export const mockedCategory: ICategoryRequest = {
-  name: "Gabriel A.",
+  name: "Digital Games",
 };
 
 export const mockedBudget: IBudgetRequest = {
@@ -67,5 +67,4 @@ export const mockedBudget: IBudgetRequest = {
 
 export const mockedBudgetUpdate: IBudgetUpdate = {
   projectName: "Kenzie Blog",
-}
-
+};
