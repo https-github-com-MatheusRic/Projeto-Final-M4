@@ -10,34 +10,34 @@ export const mockedUser: IUserCreate = {
   name: "Bruna",
   username: "brunaTeste",
   position: "Junior",
-};
+}
 
 export const mockedUserLogin: IUserLogin = {
   email: "test@email.com",
   password: "password123",
-};
+}
 
 export const mockedUserUpdate: IUserUpdate = {
   name: "Bruna 2",
-};
+}
 
 export const mockedCustomer: ICustomerRequest = {
   name: "Gabriel",
   isCompany: false,
-  email: 'gabriel@email.com',
-  contact: '5511988888888'
+  email: "gabriel@email.com",
+  contact: "5511988888888",
 }
 
 export const mockedCustomerUpdate: ICustomerUpdate = {
   name: "Gabriel A.",
 }
 
-export const mockedBudgetStack: IBudgetStack = {
-  stack: "Full Stack",
+export const mockedCategory: ICategoryRequest = {
+  name: "Digital Games",
 }
 
-export const mockedCategory: ICategoryRequest = {
-  name: "Gabriel A.",
+export const mockedBudgetStack: IBudgetStack = {
+  stack: "Full Stack",
 }
 
 export const mockedBudget: IBudgetRequest = {
@@ -49,8 +49,8 @@ export const mockedBudget: IBudgetRequest = {
   categoryId: "",
   customerId: "",
   budgetStackId: "",
-};
+}
 
 export const mockedBudgetUpdate: IBudgetUpdate = {
   name: "Kenzie Blog",
-};
+}
