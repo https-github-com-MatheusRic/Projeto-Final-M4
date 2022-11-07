@@ -84,7 +84,7 @@ describe("PATCH - /users/", () => {
       .send(mockedUserUpdateEmail)
       .set("Authorization", token);
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");
   });
 });
