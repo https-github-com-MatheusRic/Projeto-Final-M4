@@ -11,7 +11,7 @@ const updateBudgetService = async (
   const dataKeys = Object.keys(data)
 
   if (dataKeys.length === 0) {
-    throw new AppError("No fields to edit.")
+    throw new AppError("No fields to edit")
   }
 
   dataKeys.forEach((key) => {
@@ -34,6 +34,9 @@ const updateBudgetService = async (
     where: {
       uuid: budgetId,
     },
+    relations: {
+      user: true,
+    },
   })
 
   if (!budget) {
@@ -50,6 +53,12 @@ const updateBudgetService = async (
   const updatedBudget = await budgetRepository.findOne({
     where: {
       uuid: budgetId,
+    },
+    relations: {
+      user: true,
+      category: true,
+      budgetStack: true,
+      customer: true,
     },
   })
 

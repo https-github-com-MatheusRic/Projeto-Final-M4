@@ -5,8 +5,18 @@ import AppDataSource from "../../../data-source"
 import app from "../../../app"
 
 import { IBudget } from "../../../interfaces/budgets"
-import { mockedBudget, mockedUser, mockedUserLogin } from "../../mocks"
+import {
+  mockedBudget,
+  mockedBudgetStack,
+  mockedCategory,
+  mockedCustomer,
+  mockedUser,
+  mockedUserLogin,
+} from "../../mocks"
 
+let customerId: any
+let categoryId: any
+let budgetStackId: any
 let tokenUser = ""
 let budgetId = ""
 let budget: IBudget
@@ -26,10 +36,33 @@ describe("GET - /budgets/:uuid/", () => {
     const resLogin = await request(app).post("/login").send(mockedUserLogin)
     tokenUser = resLogin.body.token
 
+    const resCustomer = await request(app)
+      .post("/customers")
+      .set("Authorization", `Bearer ${tokenUser}`)
+      .send(mockedCustomer)
+    customerId = resCustomer.body.uuid
+
+    const resCategory = await request(app)
+      .post("/categories")
+      .set("Authorization", `Bearer ${tokenUser}`)
+      .send(mockedCategory)
+    categoryId = resCategory.body.uuid
+
+    const resBudgetStack = await request(app)
+      .post("/stacks")
+      .set("Authorization", `Bearer ${tokenUser}`)
+      .send(mockedBudgetStack)
+    budgetStackId = resBudgetStack.body.uuid
+
     const resCreateBudget = await request(app)
       .post("/budgets")
       .set("Authorization", `Bearer ${tokenUser}`)
-      .send(mockedBudget)
+      .send({
+        ...mockedBudget,
+        customerId,
+        categoryId,
+        budgetStackId,
+      })
 
     budget = resCreateBudget.body
     budgetId = resCreateBudget.body.uuid

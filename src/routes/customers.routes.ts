@@ -13,8 +13,9 @@ const routes = Router()
 
 export const costumersRouter = () => {
   routes.post(
-    "/", 
-    validadeSerializerMiddleware(createCustomerSerializer), 
+    "/",
+    ensureAuthMiddleware,
+    validadeSerializerMiddleware(createCustomerSerializer),
     createCustomerController
   )
   routes.get("/", ensureAuthMiddleware, listCustomersController)

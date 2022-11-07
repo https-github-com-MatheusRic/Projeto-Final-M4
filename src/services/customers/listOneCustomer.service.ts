@@ -9,7 +9,14 @@ const listOneCustomerService = async (
 ): Promise<Customer> => {
   const customerRepository = AppDataSource.getRepository(Customer)
 
-  const customer = await customerRepository.findOneBy({ uuid: customerId })
+  const customer = await customerRepository.findOne({
+    where: { 
+      uuid: customerId 
+    },
+    relations: {
+      user: true
+    }
+  })
 
   if (!customer) {
     throw new AppError("Customer not found", 404)

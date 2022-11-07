@@ -52,5 +52,5 @@ export const mockedBudget: IBudgetRequest = {
 }
 
 export const mockedBudgetUpdate: IBudgetUpdate = {
-  name: "Kenzie Blog",
+  projectName: "Kenzie Blog",
 }

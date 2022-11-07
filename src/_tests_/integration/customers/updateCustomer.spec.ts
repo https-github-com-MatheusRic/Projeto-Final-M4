@@ -115,6 +115,6 @@ describe("PATCH - /customers/:uuid/ ", () => {
       .send(mockedCustomerUpdate)
 
     expect(resUpdateCustomer.status).toBe(201)
-    expect(resUpdateCustomer.body[0].name).toEqual("Gabriel A.")
+    expect(resUpdateCustomer.body.name).toEqual("Gabriel A.")
   })
 })
