@@ -1,4 +1,4 @@
-import { IUserCreate, IUserLogin } from "../../interfaces/users"
+import { IUserCreate, IUserLogin, IUserUpdate } from "../../interfaces/users"
 import { IBudgetRequest, IBudgetUpdate } from "../../interfaces/budgets"
 import { ICustomerRequest, ICustomerUpdate } from "../../interfaces/customers"
 import { IBudgetStack } from "../../interfaces/budgetsStacks"
@@ -10,12 +10,16 @@ export const mockedUser: IUserCreate = {
   name: "Bruna",
   username: "brunaTeste",
   position: "Junior",
-}
+};
 
 export const mockedUserLogin: IUserLogin = {
   email: "test@email.com",
   password: "password123",
-}
+};
+
+export const mockedUserUpdate: IUserUpdate = {
+  name: "Bruna 2",
+};
 
 export const mockedCustomer: ICustomerRequest = {
   name: "Gabriel",
@@ -45,9 +49,8 @@ export const mockedBudget: IBudgetRequest = {
   categoryId: "",
   customerId: "",
   budgetStackId: "",
-}
+};
 
 export const mockedBudgetUpdate: IBudgetUpdate = {
   name: "Kenzie Blog",
-}
-
+};
