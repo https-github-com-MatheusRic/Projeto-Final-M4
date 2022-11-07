@@ -110,11 +110,11 @@ describe("PATCH - /customers/:uuid/ ", () => {
 
   test("Should be possible to update the customer", async () => {
     const resUpdateCustomer = await request(app)
-      .patch(`/customer/${customerId}`)
+      .patch(`/customers/${customerId}`)
       .set("Authorization", `Bearer ${tokenUser}`)
       .send(mockedCustomerUpdate)
 
     expect(resUpdateCustomer.status).toBe(201)
-    expect(resUpdateCustomer.body[0].name).toEqual("Gabriel A.")
+    expect(resUpdateCustomer.body.name).toEqual("Gabriel A.")
   })
 })

@@ -12,7 +12,7 @@ const updateCustomerService = async (
   const dataKeys = Object.keys(data)
 
   if (dataKeys.length === 0) {
-    throw new AppError("No fields to edit.")
+    throw new AppError("No fields to edit")
   }
 
   dataKeys.forEach((key) => {
