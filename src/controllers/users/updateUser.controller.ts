@@ -5,7 +5,7 @@ import { instanceToPlain } from "class-transformer";
 const updateUserController = async (request: Request, response: Response) => {
   const data = request.body;
   if (data.hasOwnProperty("uuid") || data.hasOwnProperty("email")) {
-    return response.status(400).json({
+    return response.status(401).json({
       message: "it should not be possible to pass the uuid or email field",
     });
   }

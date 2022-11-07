@@ -36,7 +36,7 @@ describe("POST - /users/", () => {
   test("POST /users -> It should not be possible to create two users with the same email", async () => {
     const result = await request(app).post("/users").send(mockedUser);
 
-    expect(result.status).toBe(400);
+    expect(result.status).toBe(401);
     expect(result.body).toHaveProperty("message");
   });
 
@@ -51,7 +51,7 @@ describe("POST - /users/", () => {
   test("POST /users -> It should not be possible to create a user by passing the UUID property", async () => {
     const result = await request(app).post("/users").send(mockedUserWithId);
 
-    expect(result.status).toBe(400);
+    expect(result.status).toBe(401);
     expect(result.body).toHaveProperty("message");
   });
 });
