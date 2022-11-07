@@ -31,6 +31,10 @@ export const mockedUserWithId: IUserWithId = {
   position: "senior",
 };
 
+export const mockedUserUpdateEmail: IUserUpdate = {
+  email: "teste@tese.com.br",
+};
+
 export const mockedCustomer: ICustomerRequest = {
   name: "Gabriel",
   isCompany: false,
