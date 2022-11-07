@@ -1,9 +1,15 @@
-import { mockedUserLogin } from "./../../mocks/index";
-import { DataSource } from "typeorm";
+import {
+  mockedUserLogin,
+  mockedUser,
+  mockedUserUpdate,
+  mockedUserUpdateEmail,
+} from "./../../mocks/index";
 import request from "supertest";
-
-import AppDataSource from "../../../data-source";
 import app from "../../../app";
+import { DataSource } from "typeorm";
+import AppDataSource from "../../../data-source";
+
+let user: any;
 
 describe("PATCH - /users/", () => {
   let connection: DataSource;
@@ -16,94 +22,69 @@ describe("PATCH - /users/", () => {
       .catch((error) => {
         console.log(error);
       });
+
+    user = await request(app).post("/users").send(mockedUser);
   });
 
   afterAll(async () => {
     await connection.destroy();
   });
-});
 
-test("should not be able to update user without authentication", async () => {
-  const adminLoginResponse = await request(app)
-    .post("/login")
-    .send(mockedUserLogin);
-  const userTobeUpdate = await request(app)
-    .get("/users")
-    .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
-  const response = await request(app).patch(
-    `/users/${userTobeUpdate.body[0].id}`
-  );
+  test("PATCH /users/:id -> Must be able to update the user", async () => {
+    const userLogin = await request(app).post("/login").send(mockedUserLogin);
+    const token = `Bearer ${userLogin.body.token}`;
 
-  expect(response.body).toHaveProperty("message");
-  expect(response.status).toBe(401);
-});
+    const userTobeUpdateRequest = await request(app)
+      .get("/users")
+      .set("Authorization", token);
+    const userTobeUpdateId = userTobeUpdateRequest.body[0].uuid;
 
-test("should not be able to update user with invalid id", async () => {
-  const newValues = { name: "Matheus Ricardo", email: "matheus@mail.com" };
+    const response = await request(app)
+      .patch(`/users/${userTobeUpdateId}`)
+      .set("Authorization", token)
+      .send(mockedUserUpdate);
 
-  const admingLoginResponse = await request(app)
-    .post("/login")
-    .send(mockedUserLogin);
-  const token = `Bearer ${admingLoginResponse.body.token}`;
+    const userUpdated = await request(app)
+      .get("/users")
+      .set("Authorization", token);
 
-  const userTobeUpdateRequest = await request(app)
-    .get("/users")
-    .set("Authorization", token);
-  const userTobeUpdateId = userTobeUpdateRequest.body[0].id;
+    expect(response.status).toBe(200);
+    expect(userUpdated.body[0].name).toEqual(mockedUserUpdate.name);
+    expect(userUpdated.body[0]).not.toHaveProperty("password");
+  });
 
-  const response = await request(app)
-    .patch(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`)
-    .set("Authorization", token)
-    .send(newValues);
+  test("PATCH /users/:id -> Should not be able to update the user without authentication", async () => {
+    const userLogin = await request(app).post("/login").send(mockedUserLogin);
+    const token = `Bearer ${userLogin.body.token}`;
 
-  expect(response.body).toHaveProperty("message");
-  expect(response.status).toBe(404);
-});
+    const userTobeUpdateRequest = await request(app)
+      .get("/users")
+      .set("Authorization", token);
+    const userTobeUpdateId = userTobeUpdateRequest.body[0].uuid;
 
-test("should not be able to update id field value", async () => {
-  const newValues = { id: false };
+    const response = await request(app)
+      .patch(`/users/${userTobeUpdateId}`)
+      .send(mockedUserUpdate);
 
-  const admingLoginResponse = await request(app)
-    .post("/login")
-    .send(mockedUserLogin);
-  const token = `Bearer ${admingLoginResponse.body.token}`;
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty("message");
+  });
 
-  const userTobeUpdateRequest = await request(app)
-    .get("/users")
-    .set("Authorization", token);
-  const userTobeUpdateId = userTobeUpdateRequest.body[0].id;
+  test("PATCH /users/:id -> Should not be able to update user email", async () => {
+    const userLogin = await request(app).post("/login").send(mockedUserLogin);
+    const token = `Bearer ${userLogin.body.token}`;
 
-  const response = await request(app)
-    .patch(`/users/${userTobeUpdateId}`)
-    .set("Authorization", token)
-    .send(newValues);
-  expect(response.body).toHaveProperty("message");
-  expect(response.status).toBe(401);
-});
+    const userTobeUpdateRequest = await request(app)
+      .get("/users")
+      .set("Authorization", token);
+    const userTobeUpdateId = userTobeUpdateRequest.body[0].uuid;
 
-test("PATCH /users/:id -  should be able to update user", async () => {
-  const newValues = { name: "Matheus Ricardo", email: "matheus@mail.com" };
+    const response = await request(app)
+      .patch(`/users/${userTobeUpdateId}`)
+      .send(mockedUserUpdateEmail)
+      .set("Authorization", token);
 
-  const admingLoginResponse = await request(app)
-    .post("/login")
-    .send(mockedUserLogin);
-  const token = `Bearer ${admingLoginResponse.body.token}`;
-
-  const userTobeUpdateRequest = await request(app)
-    .get("/users")
-    .set("Authorization", token);
-  const userTobeUpdateId = userTobeUpdateRequest.body[0].id;
-
-  const response = await request(app)
-    .patch(`/users/${userTobeUpdateId}`)
-    .set("Authorization", token)
-    .send(newValues);
-
-  const userUpdated = await request(app)
-    .get("/users")
-    .set("Authorization", token);
-
-  expect(response.status).toBe(200);
-  expect(userUpdated.body[0].name).toEqual("Matheus Ricardo");
-  expect(userUpdated.body[0]).not.toHaveProperty("password");
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty("message");
+  });
 });
