@@ -110,7 +110,7 @@ describe("PATCH - /customers/:uuid/ ", () => {
 
   test("Should be possible to update the customer", async () => {
     const resUpdateCustomer = await request(app)
-      .patch(`/customer/${customerId}`)
+      .patch(`/customers/${customerId}`)
       .set("Authorization", `Bearer ${tokenUser}`)
       .send(mockedCustomerUpdate)
 

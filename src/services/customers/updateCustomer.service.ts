@@ -31,14 +31,13 @@ const updateCustomerService = async (
 
   const customerRepository = AppDataSource.getRepository(Customer)
   const foundCustomer = await customerRepository.findOne({
-    where: { 
-      uuid: id 
+    where: {
+      uuid: id,
     },
     relations: {
-      user: true
-    }
+      user: true,
+    },
   })
-
 
   if (!foundCustomer) {
     throw new AppError("Customer not found", 404)

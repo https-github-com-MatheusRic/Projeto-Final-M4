@@ -20,7 +20,7 @@ const listOneCustomerService = async (
 
   if (!customer) {
     throw new AppError("Customer not found", 404)
-  } else if (userId !== customer.user.uuid) {
+  } else if (userId !== customer.user?.uuid) {
     throw new AppError("Unauthorized access", 401)
   }
 

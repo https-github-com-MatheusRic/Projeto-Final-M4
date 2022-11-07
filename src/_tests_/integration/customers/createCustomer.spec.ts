@@ -47,13 +47,13 @@ describe("POST - /customers/", () => {
       .set("Authorization", `Bearer ${tokenUser}`)
       .send(mockedCustomer)
 
-    expect(resCreateCustomer.status).toBe(201)
     expect(resCreateCustomer.body).toHaveProperty("uuid")
     expect(resCreateCustomer.body).toHaveProperty("name")
-    expect(resCreateCustomer.body).toHaveProperty("isCompany")
     expect(resCreateCustomer.body).toHaveProperty("email")
+    expect(resCreateCustomer.body).toHaveProperty("isCompany")
     expect(resCreateCustomer.body).toHaveProperty("contact")
     expect(resCreateCustomer.body).toHaveProperty("user")
+    expect(resCreateCustomer.status).toBe(201)
   })
 
   test("Shouldn't be possible to create a customer that already exists", async () => {

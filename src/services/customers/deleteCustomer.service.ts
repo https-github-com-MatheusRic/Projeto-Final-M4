@@ -10,11 +10,12 @@ const deleteCustomerService = async (
   const customerRepository = AppDataSource.getRepository(Customer)
 
   const foundCustomer = await customerRepository.findOne({
-    where: { 
-      uuid: id 
-    }, relations: {
-      user: true
-    }
+    where: {
+      uuid: id,
+    },
+    relations: {
+      user: true,
+    },
   })
 
   if (!foundCustomer) {
