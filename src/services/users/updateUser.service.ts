@@ -6,8 +6,29 @@ import { IUserUpdate } from "../../interfaces/users";
 
 const updateUserService = async (
   data: IUserUpdate,
-  id: string
+  id: string,
 ): Promise<User | null> => {
+  const keysBody = Object.keys(data);
+
+  if (keysBody.length === 0) {
+    throw new AppError("No fields to edit");
+  }
+
+  keysBody.forEach((key) => {
+    if (
+      key !== "password" &&
+      key !== "name" &&
+      key !== "username" &&
+      key !== "position" &&
+      key !== "imageUrl"
+    ) {
+      throw new AppError(
+        "Accepted fields only: password, name, username, position, imageUrl",
+        401,
+      );
+    }
+  });
+
   const userRepository = AppDataSource.getRepository(User);
   const user = await userRepository.findOneBy({
     uuid: id,
