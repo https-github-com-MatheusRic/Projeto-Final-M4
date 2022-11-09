@@ -31,15 +31,15 @@ export class Budget {
     })
     variableCost: number
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, { onDelete: "CASCADE" })
     user: User
 
-    @ManyToOne(() => Category)
+    @ManyToOne(() => Category, { onDelete: "CASCADE" })
     category: Category
 
-    @ManyToOne(() => Customer)
+    @ManyToOne(() => Customer, { onDelete: "CASCADE" })
     customer: Customer
 
-    @ManyToOne(() => BudgetStack)
+    @ManyToOne(() => BudgetStack, { onDelete: "CASCADE" })
     budgetStack: BudgetStack
 }
