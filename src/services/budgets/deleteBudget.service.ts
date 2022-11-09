@@ -9,11 +9,18 @@ const deleteBudgetService = async (
 ): Promise<void> => {
   const budgetRepository = AppDataSource.getRepository(Budget)
 
-  const budget = await budgetRepository.findOneBy({ uuid: budgetId })
+  const budget = await budgetRepository.findOne({
+    where: {
+      uuid: budgetId,
+    },
+    relations: {
+      user: true,
+    },
+  })
 
   if (!budget) {
     throw new AppError("Budget not found", 404)
-  } else if (userId !== budget.user.uuid) {
+  } else if (userId !== budget!.user?.uuid) {
     throw new AppError("Unauthorized access", 401)
   }
 

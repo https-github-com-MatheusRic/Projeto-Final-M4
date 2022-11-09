@@ -1,15 +1,10 @@
 import { DataSource } from "typeorm"
 import request from "supertest"
-import * as uuid from "uuid"
 
 import AppDataSource from "../../../data-source"
 import app from "../../../app"
 
-import {
-  mockedCustomer,
-  mockedUser,
-  mockedUserLogin,
-} from "../../mocks"
+import { mockedCustomer, mockedUser, mockedUserLogin } from "../../mocks"
 
 jest.mock("uuid")
 let tokenUser = ""
@@ -36,7 +31,9 @@ describe("POST - /customers/", () => {
   })
 
   test("Shouldn't be possible to create a new customer without authentication", async () => {
-    const errAuthUser = await request(app).post("/customers").send(mockedCustomer)
+    const errAuthUser = await request(app)
+      .post("/customers")
+      .send(mockedCustomer)
 
     expect(errAuthUser.status).toBe(401)
     expect(errAuthUser.body).toMatchObject({
@@ -45,26 +42,18 @@ describe("POST - /customers/", () => {
   })
 
   test("Should be possible to create a new customer", async () => {
-    const uuidSpy = jest.spyOn(uuid, "v4")
-    uuidSpy.mockReturnValue("some-uuid")
-
     const resCreateCustomer = await request(app)
       .post("/customers")
       .set("Authorization", `Bearer ${tokenUser}`)
       .send(mockedCustomer)
 
+    expect(resCreateCustomer.body).toHaveProperty("uuid")
+    expect(resCreateCustomer.body).toHaveProperty("name")
+    expect(resCreateCustomer.body).toHaveProperty("email")
+    expect(resCreateCustomer.body).toHaveProperty("isCompany")
+    expect(resCreateCustomer.body).toHaveProperty("contact")
+    expect(resCreateCustomer.body).toHaveProperty("user")
     expect(resCreateCustomer.status).toBe(201)
-    expect(uuidSpy).toHaveBeenCalled()
-    expect(resCreateCustomer.body).toEqual(
-      expect.objectContaining({
-        uuid: "some-uuid",
-        name: "Gabriel",
-        isCompany: false,
-        email: "gabriel@email.com",
-        contact: "5511988888888",
-        userId: user.uuid,
-      })
-    )
   })
 
   test("Shouldn't be possible to create a customer that already exists", async () => {

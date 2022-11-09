@@ -10,19 +10,12 @@ import { Category } from "../../entities/category.entitie"
 
 const createBudgetService = async (
   userId: string,
-  {
-    projectName,
-    projectTime,
-    budget,
-    fixedCost,
-    variableCost,
-    categoryId,
-    customerId,
-    budgetStackId,
-  }: IBudgetRequest
+  data: IBudgetRequest
 ): Promise<Budget> => {
   const userRepository = AppDataSource.getRepository(User)
   const user = await userRepository.findOneBy({ uuid: userId })
+
+  const { customerId, budgetStackId, categoryId } = data
 
   const customerRepository = AppDataSource.getRepository(Customer)
   const customer = await customerRepository.findOneBy({ uuid: customerId })
@@ -32,7 +25,9 @@ const createBudgetService = async (
   }
 
   const stackRepository = AppDataSource.getRepository(BudgetStack)
-  const budgetStack = await stackRepository.findOneBy({ uuid: budgetStackId })
+  const budgetStack = await stackRepository.findOneBy({
+    uuid: budgetStackId,
+  })
 
   if (!budgetStack) {
     throw new AppError("Stack not found", 404)
@@ -47,15 +42,11 @@ const createBudgetService = async (
 
   const budgetRepository = AppDataSource.getRepository(Budget)
   const newBudget = budgetRepository.create({
-    projectName,
-    projectTime,
-    budget,
-    fixedCost,
-    variableCost,
-    user: user!,
+    ...data,
     category,
-    customer,
     budgetStack,
+    customer,
+    user: user!,
   })
 
   await budgetRepository.save(newBudget)

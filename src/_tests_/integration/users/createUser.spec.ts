@@ -1,10 +1,8 @@
-import { DataSource } from "typeorm";
+import { mockedUser, mockedUserWithId } from "./../../mocks/index";
 import request from "supertest";
-
-import AppDataSource from "../../../data-source";
 import app from "../../../app";
-
-import { mockedUser } from "./../../mocks/index";
+import { DataSource } from "typeorm";
+import AppDataSource from "../../../data-source";
 
 describe("POST - /users/", () => {
   let connection: DataSource;
@@ -22,23 +20,38 @@ describe("POST - /users/", () => {
   afterAll(async () => {
     await connection.destroy();
   });
-});
 
-test("Shouldn't be possible to create two users with the same email", async () => {
-  const result = await request(app).post("/users").send(mockedUser);
+  test("POST /users -> Must be able to create a new user", async () => {
+    const result = await request(app).post("/users").send(mockedUser);
 
-  expect(result.body).toHaveProperty("message");
-  expect(result.status).toBe(400);
-});
+    expect(result.status).toBe(201);
+    expect(result.body).toHaveProperty("uuid");
+    expect(result.body).toHaveProperty("name");
+    expect(result.body).toHaveProperty("email");
+    expect(result.body).toHaveProperty("username");
+    expect(result.body).toHaveProperty("position");
+    expect(result.body).not.toHaveProperty("password");
+  });
 
-test("Should be possible to create a new budget", async () => {
-  const result = await request(app).post("/users").send(mockedUser);
+  test("POST /users -> It should not be possible to create two users with the same email", async () => {
+    const result = await request(app).post("/users").send(mockedUser);
 
-  expect(result.status).toBe(201);
-  expect(result.body).toHaveProperty("uuid");
-  expect(result.body).toHaveProperty("name");
-  expect(result.body).toHaveProperty("email");
-  expect(result.body).toHaveProperty("username");
-  expect(result.body).toHaveProperty("possition");
-  expect(result.body).not.toHaveProperty("password");
+    expect(result.status).toBe(401);
+    expect(result.body).toHaveProperty("message");
+  });
+
+  test("POST /users -> It should not be possible to create a user if some mandatory field is missing", async () => {
+    const newUser = { name: "jose da silva" };
+    const result = await request(app).post("/users").send(newUser);
+
+    expect(result.status).toBe(400);
+    expect(result.body).toHaveProperty("message");
+  });
+
+  test("POST /users -> It should not be possible to create a user by passing the UUID property", async () => {
+    const result = await request(app).post("/users").send(mockedUserWithId);
+
+    expect(result.status).toBe(401);
+    expect(result.body).toHaveProperty("message");
+  });
 });

@@ -12,7 +12,7 @@ const updateCustomerService = async (
   const dataKeys = Object.keys(data)
 
   if (dataKeys.length === 0) {
-    throw new AppError("No fields to edit.")
+    throw new AppError("No fields to edit")
   }
 
   dataKeys.forEach((key) => {
@@ -30,11 +30,18 @@ const updateCustomerService = async (
   })
 
   const customerRepository = AppDataSource.getRepository(Customer)
-  const foundCustomer = await customerRepository.findOneBy({ uuid: id })
+  const foundCustomer = await customerRepository.findOne({
+    where: {
+      uuid: id,
+    },
+    relations: {
+      user: true,
+    },
+  })
 
   if (!foundCustomer) {
     throw new AppError("Customer not found", 404)
-  } else if (userId !== foundCustomer.user.uuid) {
+  } else if (userId !== foundCustomer.user?.uuid) {
     throw new AppError("Unauthorized access", 401)
   }
 

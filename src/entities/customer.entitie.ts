@@ -23,6 +23,6 @@ export class Customer {
     @OneToMany(() => Budget, budget => budget.customer)
     budgets: Budget[]
 
-    @ManyToOne(() => User )
+    @ManyToOne(() => User)
     user: User
 }

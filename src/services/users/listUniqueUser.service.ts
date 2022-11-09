@@ -1,19 +1,24 @@
-import AppDataSource from "../../data-source"
-import { User } from "../../entities/user.entitie"
-import AppError from "../../errors/appError"
+import AppDataSource from "../../data-source";
+import { User } from "../../entities/user.entitie";
+import AppError from "../../errors/appError";
 
 const listUniqueUserService = async (id: string): Promise<User> => {
-    
-    const userRepository = AppDataSource.getRepository(User)
-    const user = await userRepository.findOneBy({
-        uuid: id
-    })
-    
-    if(!user){
-        throw new AppError("User is not found", 404)
-    }
+  const userRepository = AppDataSource.getRepository(User);
+  const user = await userRepository.findOne({
+    where: {
+      uuid: id,
+    },
+    relations: {
+      customers: true,
+      budgets: true,
+    },
+  });
 
-    return user
-}
+  if (!user) {
+    throw new AppError("User is not found", 404);
+  }
 
-export default listUniqueUserService
+  return user;
+};
+
+export default listUniqueUserService;

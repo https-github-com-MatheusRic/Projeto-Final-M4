@@ -12,8 +12,8 @@ export interface IBudget {
 }
 
 export interface IBudgetUpdate {
-  name?: string
-  time?: number
+  projectName?: string
+  projectTime?: number
   budget?: number
   fixedCost?: number
   variableCost?: number
