@@ -23,6 +23,6 @@ export class Customer {
     @OneToMany(() => Budget, budget => budget.customer)
     budgets: Budget[]
 
-    @ManyToOne(() => User, { onDelete: "CASCADE" })
+    @ManyToOne(() => User, { cascade: true, onDelete: "CASCADE"})
     user: User
 }

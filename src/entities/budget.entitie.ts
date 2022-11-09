@@ -31,15 +31,15 @@ export class Budget {
     })
     variableCost: number
 
-    @ManyToOne(() => User, { onDelete: "CASCADE" })
+    @ManyToOne(() => User, { cascade: true, onDelete: "CASCADE" })
     user: User
 
-    @ManyToOne(() => Category, { onDelete: "CASCADE" })
+    @ManyToOne(() => Category, { cascade: true, onDelete: "CASCADE" })
     category: Category
 
-    @ManyToOne(() => Customer, { onDelete: "CASCADE" })
+    @ManyToOne(() => Customer, { cascade: true, onDelete: "CASCADE" })
     customer: Customer
 
-    @ManyToOne(() => BudgetStack, { onDelete: "CASCADE" })
+    @ManyToOne(() => BudgetStack, { cascade: true, onDelete: "CASCADE" })
     budgetStack: BudgetStack
 }
