@@ -4,18 +4,20 @@ import { Customer } from "../../entities/customer.entitie"
 import { User } from "../../entities/user.entitie"
 
 const listCustomersService = async (userId: string): Promise<Customer[]> => {
-  const userRepository = AppDataSource.getRepository(User)
+  const costumersRepository = AppDataSource.getRepository(Customer)
 
-  const user = await userRepository.findOne({
+  const customers = await costumersRepository.find({
     where: {
-      uuid: userId,
+      user: {
+        uuid: userId
+      }
     },
     relations: {
-      customers: true,
-    },
+      budgets: true
+    }
   })
 
-  return user!.customers
+  return customers
 }
 
 export default listCustomersService

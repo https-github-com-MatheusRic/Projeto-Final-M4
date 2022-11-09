@@ -14,7 +14,8 @@ const listOneCustomerService = async (
       uuid: customerId 
     },
     relations: {
-      user: true
+      user: true,
+      budgets: true
     }
   })
 
